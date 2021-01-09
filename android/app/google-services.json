@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "272252033236",
+    "project_id": "fhiquo-poc",
+    "storage_bucket": "fhiquo-poc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272252033236:android:30b6819a0c343be4e30341",
+        "android_client_info": {
+          "package_name": "fhiquo.poc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272252033236-s2c5d8de7b1s1mq3in62vos504iarh9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf6JxbSrIhKe_i8i9BAwArgxynEVXrsZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272252033236-s2c5d8de7b1s1mq3in62vos504iarh9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
