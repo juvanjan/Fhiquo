@@ -23,12 +23,12 @@ class Tag{
 
     var set = new List<Tag>();
 
-    Tag tag1 = Tag.createTag(0, "Advice");
-    Tag tag2 = Tag.createTag(1, "Wisdom");
-    Tag tag3 = Tag.createTag(2, "Inspiration");
-    Tag tag4 = Tag.createTag(3, "Philosophy");
-    Tag tag5 = Tag.createTag(4, "Poetry");
-    Tag tag6 = Tag.createTag(5, "Dreams");
+    Tag tag1 = Tag.createTag(0, "ADVICE");
+    Tag tag2 = Tag.createTag(1, "WISDOM");
+    Tag tag3 = Tag.createTag(2, "INSPIRATION");
+    Tag tag4 = Tag.createTag(3, "PHILOSOPHY");
+    Tag tag5 = Tag.createTag(4, "POETRY");
+    Tag tag6 = Tag.createTag(5, "DREAMS");
 
     set.add(tag1);
     set.add(tag2);
