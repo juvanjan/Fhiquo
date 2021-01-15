@@ -1,10 +1,14 @@
 
 import 'package:fhiquo/edit_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+
+import 'internal/data/quote.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(
-    home: ListView(),
+    home: NListView(),
   ));
 }
 
@@ -22,7 +26,10 @@ Map<int, Color> todoColor01 =
   900:Color.fromRGBO(0,128,128, 1),
 };
 
-class ListView extends StatelessWidget {
+
+class NListView extends StatelessWidget {
+  List<Quote> temporaryList = Quote.tempQuotes2();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -50,14 +57,76 @@ class ListView extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EditView()),
+                  MaterialPageRoute(builder: (context) => NEditView()),
                 );
               },
             )
           ],
         ),
         body: Center(
-          child: Text('List view is not yet implemented.'),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: ListView.builder(
+              itemBuilder: (context, position) {
+                return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 4),
+                                  child: Text(
+                                    temporaryList[position].body,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                  )
+                                )
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 4),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  size: 18,
+                                  color: Colors.black
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Text(temporaryList[position].author,),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                size: 18,
+                                color: Colors.black
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 4),
+                                child: Text(temporaryList[position].origin,),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  );
+              },
+              itemCount: temporaryList.length,
+            ),
+          ),
         ),
       ),
       //home: CameraScreen(),

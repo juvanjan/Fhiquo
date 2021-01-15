@@ -1,0 +1,320 @@
+<resources>
+
+    <!-- UNCLASSIFIED -->
+
+    <!-- GENERAL -->
+    <string name="app_name_stylized">ph<b>IQ</b>uo</string>
+
+    <string name="hint_by"><i>author / speaker / character / ...</i></string>
+    <string name="hint_body"><i>quote / saying / passage / speech / writing / verse / poem / lyrics / conversation / ...</i></string>
+    <string name="hint_origin"><i>source / book / event / movie / song / ...</i></string>
+    <string name="hint_comment"><i>notes / comments / additional information / ...</i></string>
+    <string name="hint_tag"><i>search tag...</i></string>
+
+    <string name="general_string_ok">OK</string>
+    <string name="general_string_yes">Yes</string>
+    <string name="general_string_no">No</string>
+
+    <string name="general_string_undo">Undo</string>
+    <string name="general_string_redo">Redo</string>
+    <string name="general_string_date_created">Date created</string> <!-- used in settings for "order by" option -->
+    <string name="general_string_date_modified">Date modified</string> <!-- used in settings for "order by" option -->
+    <string name="general_string_author">Author</string>
+    <string name="general_string_origin">Source</string>
+    <string name="general_string_settings">Settings</string>
+    <string name="general_string_add">Add</string>
+    <string name="general_string_edit">Edit</string>
+    <string name="general_string_remove">Remove</string>
+    <string name="general_string_discard">Discard</string>
+    <string name="general_string_cancel">Cancel</string>
+    <string name="general_string_advertisement">Advertisement</string>
+    <string name="general_string_ad">Ad</string>
+
+    <string name="general_warning_empty_database">You have no quotes in your collection.</string>
+    <string name="general_warning_database_filtered_out">No quotes in your collection match the current filter setting. Set a less constraining filter or switch it off.</string>
+    <string name="general_warning_trash_filtered_out">No quotes in your trash match the current filter setting. Set a less constraining filter or switch it off.</string>
+    <string name="general_warning_empty_trash">Your quote trash is empty.</string>
+
+    <string name="undo_tag_deleted_message">Tag was deleted</string>
+    <string name="undo_quote_deleted_message">Quote moved to trash</string>
+    <string name="undo_quotes_deleted_message">Quotes moved to trash</string>
+    <string name="undo_quote_permanently_deleted_message">Quote was deleted</string>
+    <string name="undo_quotes_permanently_deleted_message">Quotes were deleted</string>
+    <string name="undo_quote_restored_message">Quote was restored</string>
+    <string name="undo_quotes_restored_message">Quotes were restored</string>
+
+    <string name="general_label_date_created">Created</string>
+    <string name="general_label_last_edited">Edited</string>
+
+    <!-- BURGER MENU -->
+
+    <string name="settings_drawer_home">Home</string>
+    <string name="settings_drawer_gallery">Gallery</string>
+    <string name="settings_drawer_settings">Settings</string>
+    <string name="settings_drawer_trash">Trash</string>
+    <string name="settings_drawer_about">About</string>
+
+    <!-- LIST VIEW -->
+
+    <string name="filter_filter">Filter</string> <!-- caps via code -->
+
+    <string name="tooltip_toolbar_search">Search</string>
+    <string name="tooltip_toolbar_add_quote">Add quote</string>
+    <string name="tooltip_toolbar_select_none">Select none</string>
+    <string name="tooltip_toolbar_select_interval">Select interval</string>
+    <string name="tooltip_toolbar_select_all">Select all</string>
+    <string name="tooltip_toolbar_exit_multiple_select">Exit action mode</string>
+
+    <string name="tooltip_activity_list_delete_multiple">Move to trash</string>
+    <string name="tooltip_activity_list_add_tags_multiple">Add tags</string>
+    <string name="tooltip_activity_list_delete_tags_multiple">Remove tags</string>
+
+    <string name="tooltip_fab_randomize_quote">View random quote</string>
+
+    <string name="activity_list_dialog_add_tags">Add tags to selected quotes</string>
+    <string name="activity_list_dialog_remove_tags">Remove tags from selected quotes</string>
+    <string name="activity_list_remove_tags_empty_union">Selected quotes have no tags</string>
+
+    <!-- GALLERY -->
+
+    <string name="tooltip_activity_gallery_edit">Edit</string>
+    <string name="tooltip_activity_gallery_share">Share</string>
+    <string name="tooltip_activity_gallery_pin">Pin to widget</string>
+
+    <string name="activity_gallery_success_quote_pinned">Quote pinned to widget</string>
+
+    <!-- SHARING -->
+
+    <string name="activity_gallery_share_title">Share quote</string> <!-- In the "choose share option" popup; might appear only on some devices -->
+
+    <string name="general_share_marketing">[ from my Phiquo collection ]</string>
+
+    <!-- ADD/EDIT -->
+
+    <string name="activity_edit_view_warning_delete">Are you sure you want to move this quote to trash?</string>
+    <string name="activity_edit_view_warning_delete_multiple">Are you sure you want to move selected quotes to trash?</string>
+    <string name="activity_edit_view_warning_discard">Are you sure you want to discard changes?</string>
+    <string name="activity_edit_view_warning_delete_tag_permanently">Are you sure you want to permanently delete selected tag</string> <!-- There should be no ? at the end of this string because this string is followed by TAG and then a hardcoded ? -->
+    <string name="activity_edit_view_notice_empty_quote_restriction">Quote text is empty</string>
+    <string name="activity_edit_view_edit_title">Edit quote</string>
+    <string name="activity_edit_view_add_title">Add quote</string>
+
+    <string name="dialog_edit_tag_add_tag">Create new tag</string>
+    <string name="dialog_edit_tag_edit_tag">Edit tag</string>
+    <string name="dialog_edit_tag_warning_duplicate">This tag already exists</string>
+
+    <string name="tooltip_activity_edit_save">Save</string>
+    <string name="tooltip_activity_edit_import_options">Import options</string>
+    <string name="tooltip_activity_edit_import_gallery">Select image</string>
+    <string name="tooltip_activity_edit_import_camera">Take photo</string>
+    <string name="tooltip_activity_edit_import_voice">Record voice</string>
+    <string name="tooltip_activity_edit_add_author">Add another author</string>
+    <string name="tooltip_activity_edit_delete_author">Remove author</string>
+    <string name="tooltip_activity_edit_delete">Move to trash</string>
+
+    <!-- CAPTURE TEXT -->
+
+    <string name="activity_captured_ucrop_title">Edit image</string>
+    <string name="tooltip_activity_captured_remove_new_lines">Remove newlines</string>
+    <string name="tooltip_activity_captured_title">Edit recognized text</string>
+
+    <string name="activity_capture_error_no_cropped_image">An error occured while editing the image</string> <!-- Appears whenever there is an error with the uCrop -->
+    <string name="activity_capture_error_ocr_init_failed">There was a problem initializing Text Recognizer</string> <!-- Appears when there is an error loading OCR function -->
+    <string name="activity_capture_notice_choose_file">Choose an image</string> <!-- Appears when asked to choose an image from which to capture text; might appear only on some devices -->
+
+    <string name="activity_captured_warning_discard">Are you sure you want to discard captured text?</string>
+
+    <string name="nspeech_speech_prompt">Recording</string>
+    <string name="nspeech_speech_not_supported">Your device does not support importing quotes using microphone</string>
+
+    <!-- TRASH -->
+
+    <string name="tooltip_activity_trash_restore">Restore</string>
+    <string name="tooltip_activity_trash_delete_permanently">Permanently delete</string>
+
+    <string name="activity_trash_title">Trash</string>
+    <string name="activity_trash_warning_restore_all_quotes">Are you sure you want to restore selected quotes?</string>
+    <string name="activity_trash_warning_restore_quote">Are you sure you want to restore this quote?</string>
+    <string name="activity_trash_warning_delete_permanently_all_quotes">Are you sure you want to permanently delete selected quotes?</string>
+    <string name="activity_trash_warning_delete_permanently_quote">Are you sure you want to permanently delete this quote?</string>
+
+    <!-- WIDGET -->
+
+    <string name="widget_notice_activity_not_found">There was a problem loading the application</string> <!-- When trying to go into app via widget buttons -->
+
+    <!-- ABOUT -->
+
+    <string name="activity_about_string_version">Version</string>
+    <string name="activity_about_privacy_policy">Privacy policy</string> <!-- caps via code -->
+    <string name="activity_about_licenses">Licenses</string> <!-- caps via code -->
+
+    <!-- SETTINGS -->
+
+    <string name="activity_settings_error_exporting_db">Export failed</string>
+    <string name="activity_settings_success_exporting_db">Export successful</string>
+    <string name="activity_settings_error_importing_db">Import failed</string>
+    <string name="activity_settings_success_importing_db">Import successful</string>
+    <string name="activity_settings_importing_loading">Importing database. Please wait...</string>
+    <string name="activity_settings_exporting_loading">Exporting database. Please wait...</string>
+
+    <string name="settings_list_header">List</string> <!-- caps via code -->
+    <string name="settings_gallery_header">Gallery</string> <!-- caps via code -->
+    <string name="settings_database_header">Database</string> <!-- caps via code -->
+    <string name="settings_gallery_tutorial_header">Tutorial</string > <!-- caps via code -->
+    <string name="settings_gallery_developer_header">Developer options</string> <!-- caps via code -->
+    <string name="settings_gallery_icons">Show icons</string>
+    <string name="settings_gallery_authors">Show authors</string>
+    <string name="settings_gallery_origin">Show origin</string>
+    <string name="settings_gallery_comment">Show notes</string>
+    <string name="settings_gallery_tags">Show tags</string>
+    <string name="settings_gallery_info">Show info</string>
+    <string name="settings_database_import">Import</string>
+    <string name="settings_database_import_subtitle">Add quotes to your collection from a file</string>
+    <string name="settings_database_export">Export</string>
+    <string name="settings_database_export_subtitle">Save the content of your database into a file</string>
+    <string name="settings_gallery_order">Order by</string>
+    <string name="settings_gallery_order_dialog">Order by</string>
+    <string name="settings_gallery_order_direction">Order direction</string>
+    <string name="settings_gallery_order_direction_dialog">Order direction</string>
+    <string name="settings_gallery_order_ascending">Ascending</string>
+    <string name="settings_gallery_order_descending">Descending</string>
+    <string name="settings_gallery_tutorial_reset">Reactivate tutorial</string>
+    <string name="settings_gallery_tutorial_reset_subtitle">View tutorial again</string>
+    <string name="settings_gallery_developer_add_quotes">Add testing quotes</string>
+    <string name="settings_gallery_developer_add_quotes_subtitle">Insert quotes for testing</string>
+    <string name="settings_gallery_visibility">Appearance</string>
+    <string name="settings_gallery_visibility_subtitle">Customize appearance of quote gallery</string>
+    <string name="settings_gallery_visibility_dialog">Gallery appearance preferences</string>
+    <string name="settings_gallery_background">Background</string>
+    <string name="settings_gallery_background_subtitle">Change quote gallery background</string>
+    <string name="settings_gallery_background_dialog">Select gallery background</string>
+
+    <!-- TUTORIAL -->
+
+    <string name="tutorial_title_list_view_01">Welcome</string>
+    <string name="tutorial_title_list_view_02">Tutorial</string>
+    <string name="tutorial_title_list_view_03">Quote list</string>
+    <string name="tutorial_title_list_view_04">Filter</string>
+    <string name="tutorial_title_list_view_05">Random quote</string>
+    <string name="tutorial_title_list_view_06">Action mode</string>
+    <string name="tutorial_title_list_view_07">Tooltips</string>
+    <string name="tutorial_title_list_view_08">Widget</string>
+    <string name="tutorial_description_list_view_01">Welcome to Phiquo, your personal quote collector!</string>
+    <string name="tutorial_description_list_view_02">This tutorial will introduce you to the main app features. You can also skip it and reactivate it at any time in app settings.</string>
+    <string name="tutorial_description_list_view_03">Quote list is the home screen of the app. Click on any quote to view its entire content.</string>
+    <string name="tutorial_description_list_view_04">Set up a filter to show only a subset of your quote collection. Filter panel can be pulled down from under the top bar.</string>
+    <string name="tutorial_description_list_view_05">Click the Phiquo button to display a random quote from your entire collection or from a filtered subset.</string>
+    <string name="tutorial_description_list_view_06">Long-pressing a quote on the list activates action mode that lets you select one or more quotes and perform actions on them.</string>
+    <string name="tutorial_description_list_view_07">Throughout the app, long-pressing a button displays the tooltip.</string>
+    <string name="tutorial_description_list_view_08">Place the Phiquo widget on your device home screen. By default, it will display random quotes from your collection, but you may also lock it to keep displaying a particular quote.</string>
+
+    <string name="tutorial_title_edit_view_01">Text and speech recognition</string>
+    <string name="tutorial_title_edit_view_02">Multiple authors</string>
+    <string name="tutorial_title_edit_view_03">Creating tags</string>
+    <string name="tutorial_title_edit_view_04">Editing and deleting tags</string>
+    <string name="tutorial_description_edit_view_01">When adding a new quote or editing an existing one, you can extract text from pictures or voice recordings.</string>
+    <string name="tutorial_description_edit_view_02">You can add additional authors, for example, if you would like to store a conversation.</string>
+    <string name="tutorial_description_edit_view_03">Organize your collection by creating tags and applying them to your quotes.</string>
+    <string name="tutorial_description_edit_view_04">By long-pressing a tag, you can edit or delete it.</string>
+
+    <string name="tutorial_title_gallery_01">Quote gallery</string>
+    <string name="tutorial_title_gallery_02">Gallery navigation</string>
+    <string name="tutorial_title_gallery_03">Gallery customization</string>
+    <string name="tutorial_description_gallery_01">In gallery, view complete content of your quotes on a one-by-one basis. Filter settings from quote list apply also in gallery.</string>
+    <string name="tutorial_description_gallery_02">Navigate the gallery by swiping left and right or jump to a random quote with the Phiquo button.</string>
+    <string name="tutorial_description_gallery_03">Gallery appearance can be customized in settings. For example, you can change the background and choose which quote metadata is displayed.</string>
+
+    <string name="tutorial_title_trash_01">Trash</string>
+    <string name="tutorial_description_trash_01">Deleted quotes are moved to trash. Here you can restore them or permanently delete them from your app.</string>
+
+    <!-- DEFAULT DB -->
+
+
+
+    <!-- LICENSES -->
+
+    <string name="app_license">THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY BE CONTAINED IN THIS PRODUCT.\n
+\n
+==========\n
+\n
+The following software may be included in this product: uCrop. This software contains the following license and notice below:\n
+\n
+Copyright 2017, Yalantis\n
+\n
+Licensed under the Apache License, Version 2.0 (the "License");\n
+you may not use this file except in compliance with the License.\n
+You may obtain a copy of the License at\n
+\n
+   http://www.apache.org/licenses/LICENSE-2.0\n
+\n
+Unless required by applicable law or agreed to in writing, software\n
+distributed under the License is distributed on an "AS IS" BASIS,\n
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+See the License for the specific language governing permissions and\n
+limitations under the License.\n
+\n
+==========\n
+\n
+The following software may be included in this product: AppIntro. This software contains the following license and notice below:\n
+\n
+    Copyright (C) 2015-2020 AppIntro Developers\n
+\n
+    Licensed under the Apache License, Version 2.0 (the "License");\n
+    you may not use this file except in compliance with the License.\n
+    You may obtain a copy of the License at\n
+\n
+       http://www.apache.org/licenses/LICENSE-2.0\n
+\n
+    Unless required by applicable law or agreed to in writing, software\n
+    distributed under the License is distributed on an "AS IS" BASIS,\n
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+    See the License for the specific language governing permissions and\n
+    limitations under the License.\n
+\n
+==========\n
+\n
+The following software may be included in this product: Storage Chooser. This software contains the following license and notice below:\n
+\n
+This project is licensed with the Mozilla Public License v2.\n
+\n
+In practice, you can use this library as-is, with a notification of it being used. If you make any changes, you are required to publish your changes under a compatible license.\n
+\n
+==========\n
+\n
+The following software may be included in this product: PlainTextEditText. This software contains the following license and notice below:\n
+\n
+Copyright (C) 2015 The Android Open Source Project\n
+\n
+Licensed under the Apache License, Version 2.0 (the "License");\n
+you may not use this file except in compliance with the License.\n
+You may obtain a copy of the License at\n
+\n
+     http://www.apache.org/licenses/LICENSE-2.0\n
+\n
+Unless required by applicable law or agreed to in writing, software\n
+distributed under the License is distributed on an "AS IS" BASIS,\n
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+See the License for the specific language governing permissions and\n
+limitations under the License.\n
+\n
+==========\n
+\n
+The following software may be included in this product: AndroidFastScroll. This software contains the following license and notice below:\n
+\n
+Copyright 2019 Google LLC\n
+\n
+Licensed under the Apache License, Version 2.0 (the "License");\n
+you may not use this file except in compliance with the License.\n
+You may obtain a copy of the License at\n
+\n
+    https://www.apache.org/licenses/LICENSE-2.0\n
+\n
+Unless required by applicable law or agreed to in writing, software\n
+distributed under the License is distributed on an "AS IS" BASIS,\n
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+See the License for the specific language governing permissions and\n
+limitations under the License.\n
+\n
+==========</string>
+
+</resources>

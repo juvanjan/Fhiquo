@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
 import 'camera_view.dart';
+import 'internal/data/tag.dart';
 import 'main.dart';
 
-class EditView extends StatelessWidget {
-  // This widget is the root of your application.
+class NEditView extends StatelessWidget {
+  List<Tag> temporaryList = Tag.tempTags();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,10 +46,12 @@ class EditView extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Icon(Icons.format_quote),
+                  Container(
+                    padding: EdgeInsets.only(right: 8, top: 8),
+                    child: Icon(Icons.format_quote),
+                  ),
                   Flexible(
                     child: Container(
-                      margin: const EdgeInsets.only(left: 8),
                       child: Stack(
                         children: [
                           TextField(
@@ -95,10 +99,12 @@ class EditView extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.person),
+                    Container(
+                      padding: EdgeInsets.only(right: 8, top: 8),
+                      child: Icon(Icons.person),
+                    ),
                     Flexible(
                       child: Container(
-                        margin: const EdgeInsets.only(left: 8),
                         child: Stack(
                           children: [
                             TextField(
@@ -140,10 +146,12 @@ class EditView extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.star),
+                    Container(
+                      padding: EdgeInsets.only(right: 8, top: 8),
+                      child: Icon(Icons.star),
+                    ),
                     Flexible(
                       child: Container(
-                        margin: const EdgeInsets.only(left: 8),
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: "source / book / event / movie / song / ...",
@@ -174,10 +182,12 @@ class EditView extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(Icons.sticky_note_2_outlined),
+                    Container(
+                      padding: EdgeInsets.only(right: 8, top: 8),
+                      child: Icon(Icons.sticky_note_2_outlined),
+                    ),
                     Flexible(
                       child: Container(
-                        margin: const EdgeInsets.only(left: 8),
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: "notes / comments / additional information / ...",
@@ -198,6 +208,51 @@ class EditView extends StatelessWidget {
                           minLines: 2,
                         ),
                       )
+                    ),
+                  ],
+                )
+              ),
+
+
+              Container(
+                margin: EdgeInsets.only(top: 14),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(right: 8, top: 8),
+                      child: Icon(Icons.bookmark),
+                    ),
+                    Flexible(
+                      child: Column(
+                        children: [
+                          Container(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: "search tag...",
+                                hintMaxLines: 5,
+                                hintStyle: TextStyle(color: Color(0xFFb9c0e3)),
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                fillColor: Color(0xFFd2d7ed),
+                                filled: true,
+                                contentPadding: const EdgeInsets.all(10.0),
+                                isDense: true,
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              minLines: 1,
+                            ),
+                          ),
+                          Container(
+                            color: Color(0xFFe6e9f6),
+                            height: 3,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 )

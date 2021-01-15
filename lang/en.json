@@ -1,0 +1,34 @@
+{
+  "default_tag_name_1":"Advice" ,
+  "default_tag_name_2":"Wisdom",
+  "default_tag_name_3":"Inspiration",
+  "default_tag_name_4":"Philosophy",
+  "default_tag_name_5":"Poetry",
+  "default_tag_name_6":"Dreams",
+
+  "default_quote_1_quote":"Make your own Bible. Select and collect all the words and sentences that in all your reading have been to you like the blast of triumph out of Shakspear, Seneca, Moses, John, and Paul.",
+  "default_quote_1_by":"Ralph Waldo Emerson",
+  "default_quote_1_origin":"Journals of Ralph Waldo Emerson",
+  "default_quote_1_comment":"Entry from July 1836\n\nRalph Waldo Emerson (1803 – 1882) was an American essayist, lecturer, philosopher, and poet. In his early writings, Emerson spelled Shakespeare as Shakspear.",
+
+  "default_quote_2_quote":"Each day, too, acquire something which will help you to face poverty, or death, and other ills as well. After running over a lot of different thoughts, pick out one to be digested thoroughly that day. This is what I do myself; out of the many bits I have been reading I lay hold of one.",
+  "default_quote_2_by":"Seneca",
+  "default_quote_2_origin":"Letters from a Stoic",
+  "default_quote_2_comment":"In Letter II\n\nSeneca (c. 4 BC – AD 65) was a Roman statesman, Stoic philosopher, and dramatist.",
+
+  "default_quote_3_quote":"When you wake up in the morning, tell yourself: the people I deal with today will be meddling, ungrateful, arrogant, dishonest, jealous and surly. They are like this because they can't tell good from evil. But I have seen the beauty of good, and the ugliness of evil, and have recognized that the wrongdoer has a nature related to my own - not of the same blood and birth, but the same mind, and possessing a share of the divine. And so none of them can hurt me. No one can implicate me in ugliness. Nor can I feel angry at my relative, or hate him. We were born to work together like feet, hands and eyes, like the two rows of teeth, upper and lower. To obstruct each other is unnatural. To feel anger at someone, to turn your back on him: these are unnatural.",
+  "default_quote_3_by":"Marcus Aurelius",
+  "default_quote_3_origin":"Meditations",
+  "default_quote_3_comment":"In Book 2, entry 1\n\nMarcus Aurelius (121 – 180) was Roman emperor and a Stoic philosopher.",
+
+  "default_quote_4_quote":"The most important and necessary human deeds, for both doer and recipient, are those of which he does not see the results.",
+  "default_quote_4_by":"Leo Tolstoy",
+  "default_quote_4_origin":"The Law of Love and the Law of Violence",
+  "default_quote_4_comment":"Lev Tolstoy (1828 – 1910) was a Russian count and writer.",
+
+  "default_quote_5_quote":"Had I the heavens' embroidered cloths,\nEnwrought with golden and silver light,\nThe blue and the dim and the dark cloths\nOf night and light and the half−light,\nI would spread the cloths under your feet:\nBut I, being poor, have only my dreams;\nI have spread my dreams under your feet;\nTread softly because you tread on my dreams.",
+  "default_quote_5_by":"William Butler Yeats",
+  "default_quote_5_origin":"The Wind Among the Reeds",
+  "default_quote_5_comment":"William Butler Yeats (1865 –1939) was an Irish poet. The Wind Among The Reeds, published in 1899, was his third volume of poetry."
+
+}

@@ -1,7 +1,6 @@
+import 'package:fhiquo/widgets/camera_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'Widgets/camera_widget.dart';
 
 class CameraView extends StatelessWidget {
   // This widget is the root of your application.
