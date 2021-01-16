@@ -1,14 +1,24 @@
+import 'package:fhiquo/internal/data/data_helper.dart';
+import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/widgets/tag_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 import 'camera_view.dart';
-import 'internal/data/tag.dart';
 import 'main.dart';
 
-class NEditView extends StatelessWidget {
+class NEditView extends StatefulWidget {
+  @override
+  _NEditViewState createState() => _NEditViewState();
+}
+
+class _NEditViewState extends State<NEditView> {
   List<Widget> temporaryList = TagWidget.tempTagWidgets();
+
+  final bodyController = TextEditingController();
+  final authorController = TextEditingController();
+  final originController = TextEditingController();
+  final commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +45,7 @@ class NEditView extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                // do something
+                saveNewQuote(context);
               },
             )
           ],
@@ -57,6 +67,7 @@ class NEditView extends StatelessWidget {
                         child: Stack(
                           children: [
                             TextField(
+                              controller: bodyController,
                               decoration: InputDecoration(
                                 hintText: "quote / saying / passage / speech / writing / verse / poem / lyrics / conversation / ...",
                                 hintMaxLines: 5,
@@ -110,6 +121,7 @@ class NEditView extends StatelessWidget {
                           child: Stack(
                             children: [
                               TextField(
+                                controller: authorController,
                                 decoration: InputDecoration(
                                   hintText: "author / speaker / character / ...",
                                   hintStyle: TextStyle(color: Color(0xFFb9c0e3)),
@@ -155,6 +167,7 @@ class NEditView extends StatelessWidget {
                       Flexible(
                         child: Container(
                           child: TextField(
+                            controller: originController,
                             decoration: InputDecoration(
                               hintText: "source / book / event / movie / song / ...",
                               hintMaxLines: 5,
@@ -191,6 +204,7 @@ class NEditView extends StatelessWidget {
                       Flexible(
                         child: Container(
                           child: TextField(
+                            controller: commentController,
                             decoration: InputDecoration(
                               hintText: "notes / comments / additional information / ...",
                               hintMaxLines: 2,
@@ -277,7 +291,18 @@ class NEditView extends StatelessWidget {
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () async {
+
+          },
+        ),
       ),
     );
+  }
+
+  saveNewQuote(BuildContext context) async {
+    await DataHelper.internal().insertQuote(Quote.createQuote(0, authorController.text, originController.text, bodyController.text, commentController.text, new List<int>()));
+    Navigator.pop(context, true);
   }
 }

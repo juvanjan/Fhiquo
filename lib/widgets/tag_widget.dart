@@ -2,28 +2,13 @@ import 'package:fhiquo/internal/data/tag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TagWidget extends StatelessWidget {
+class TagWidget extends StatefulWidget {
   final int id;
   final String name;
   TagWidget(this.id, this.name);
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Color(0xFFe6e9f6),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-        child: Text(
-          name,
-          style: TextStyle(fontSize: 15),
-        ),
-      ),
-    );
-  }
-
+  _TagWidgetState createState() => _TagWidgetState();
 
   static List<TagWidget> tempTagWidgets() {
     List<Tag> tags = Tag.tempTags();
@@ -35,5 +20,37 @@ class TagWidget extends StatelessWidget {
 
     return set;
 
+  }
+}
+
+class _TagWidgetState extends State<TagWidget> {
+
+  bool set = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: set ? Color(0xFF232941):  Color(0xFFe6e9f6),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            set = ! set;
+          });
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+          child: Text(
+            widget.name,
+            style: TextStyle(
+              fontSize: 15,
+              color: set ? Colors.white : Colors.black
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,8 +1,9 @@
 
 import 'package:fhiquo/edit_view.dart';
+import 'package:fhiquo/internal/data/data_helper.dart';
+import 'package:fhiquo/widgets/quote_card_small_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 import 'internal/data/quote.dart';
 
@@ -27,10 +28,13 @@ Map<int, Color> todoColor01 =
 };
 
 
-class NListView extends StatelessWidget {
-  List<Quote> temporaryList = Quote.tempQuotes2();
+class NListView extends StatefulWidget {
+  @override
+  _NListViewState createState() => _NListViewState();
+}
 
-  // This widget is the root of your application.
+class _NListViewState extends State<NListView> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,10 +59,13 @@ class NListView extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NEditView()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NEditView())).then((value) {
+                  if (value == true) {
+                    setState(() {
+                      // refresh page 1 here, you may want to reload your SharedPreferences here according to your needs
+                    });
+                  }
+                });
               },
             )
           ],
@@ -66,70 +73,25 @@ class NListView extends StatelessWidget {
         body: Center(
           child: Container(
             padding: EdgeInsets.all(8),
-            child: ListView.builder(
-              itemBuilder: (context, position) {
-                return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 4),
-                                  child: Text(
-                                    temporaryList[position].body,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 3,
-                                  )
-                                )
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 4),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                  size: 18,
-                                  color: Colors.black
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 4),
-                                  child: Text(temporaryList[position].author,),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                size: 18,
-                                color: Colors.black
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 4),
-                                child: Text(temporaryList[position].origin,),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  );
+            child: FutureBuilder<List>(
+              future: DataHelper.internal().readQuotes(),
+              initialData: List<Quote>(),
+              builder: (context, snapshot) {
+              return snapshot.hasData ?
+               ListView.builder(
+                itemCount: snapshot.data.length,
+                  itemBuilder: (context, position) {
+                    return new QuoteCardSmall(body: snapshot.data[position].body, author: snapshot.data[position].author, origin: snapshot.data[position].origin);
+                  },
+                )
+                : Center(
+                  child: CircularProgressIndicator(),
+                );
               },
-              itemCount: temporaryList.length,
-            ),
+            )
           ),
         ),
       ),
-      //home: CameraScreen(),
     );
   }
 }

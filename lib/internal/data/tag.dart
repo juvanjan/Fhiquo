@@ -1,12 +1,35 @@
+import 'dart:convert';
+
+import 'data_contract.dart';
+
+Tag clientFromJson(String str) {
+  final jsonData = json.decode(str);
+  return Tag.fromMap(jsonData);
+}
+
+String clientToJson(Tag data) {
+  final dyn = data.toMap();
+  return json.encode(dyn);
+}
 
 class Tag{
   int id;
   String name;
 
-  Tag() {
-      id = -1;
-      name = "invisible_tag";
-  }
+  Tag({
+    this.id,
+    this.name
+  });
+
+  factory Tag.fromMap(Map<String, dynamic> json) => new Tag(
+    id: json[DataContract.TAGS_COLUMN_NAME_ID],
+    name: json[DataContract.TAGS_COLUMN_NAME_NAME]
+  );
+
+  Map<String, dynamic> toMap() => {
+    DataContract.TAGS_COLUMN_NAME_ID: id,
+    DataContract.TAGS_COLUMN_NAME_NAME: name,
+  };
 
   static Tag createTag(int id, String name) {
     var tag = new Tag();
