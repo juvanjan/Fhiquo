@@ -91,7 +91,7 @@ class _NListViewState extends State<NListView> {
           child: Container(
             padding: EdgeInsets.all(8),
             child: FutureBuilder<List>(
-              future: DataHelper.internal().getFilteredQuotes(query),
+              future: DataHelper.internal().getFilteredQuotesWithAds(query),
               initialData: List<Quote>(),
               builder: (context, snapshot) {
               return snapshot.hasData ?

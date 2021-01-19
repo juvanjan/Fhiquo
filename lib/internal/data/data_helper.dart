@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:fhiquo/internal/data/data_contract.dart';
 import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/internal/data/tag.dart';
+import 'package:fhiquo/internal/helpers/ad_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DataHelper {
@@ -98,14 +99,38 @@ class DataHelper {
 		}
 	}
 
+		Future<List<Quote>> getFilteredQuotesWithAds(String query) async {
+			List<Quote> initial = await getFilteredQuotes(query);
+			List<Quote> set = new List();
+
+			int counter = 1;
+			int ad_counter = 0;
+			for (var quote in initial) {
+				set.add(quote);
+				counter++;
+
+				if (counter % AdHelper.FREQUENCY_OF_ADS == 0) {
+					set.add(Quote.createAd(((counter / AdHelper.FREQUENCY_OF_ADS - 1) % AdHelper.NUMBER_OF_ADS).toInt()));
+					counter++;
+					ad_counter++;
+				}
+			}
+
+			return set;
+		}
+
 	Future<List<Quote>> getFilteredQuotes(String query) async {
   	List<Quote> initial = await readQuotes();
+
+  	if (query == null || query.isEmpty)
+			return initial;
 
   	List<Quote> set = new List();
 
   	for(Quote quote in initial) {
-  		if (quote.body.contains(query))
-  			set.add(quote);
+  		if (quote.body.contains(query)) {
+				set.add(quote);
+			}
 		}
 
 		return set;

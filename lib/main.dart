@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fhiquo/list_view.dart';
 
+import 'package:native_ads/native_ads.dart';
+
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  NativeAds.initialize();
   runApp(MaterialApp(
     home: NListView(),
   ));

@@ -27,7 +27,10 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSCameraUsageDescription</key>
-    	<string>Explanation on why the camera access is needed.</string>				  	<key>UISupportedInterfaceOrientations</key>
+    <string>Explanation on why the camera access is needed.</string>
+    <key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-6062271725539075~3488465472</string>
+    <key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

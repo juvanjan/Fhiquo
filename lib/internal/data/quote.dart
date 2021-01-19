@@ -27,7 +27,7 @@ class Quote {
   DateTime dateDeleted;
   bool deleted;
   bool private;
-  bool isAd;
+  bool isAd = false;
   int adIndex;
 
     Quote({
