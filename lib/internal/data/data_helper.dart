@@ -85,9 +85,40 @@ class DataHelper {
 	}
 
 
+	importDatabase(String path) async {
+		Database db = await database;
+		Database db_new = await openDatabase(path);
+
+		// TODO upgrade db
+
+		List<Quote> quotes = await readQuotesInternal(db_new);
+
+		for(Quote quote in quotes) {
+			insertQuote(quote);
+		}
+	}
+
+	Future<List<Quote>> getFilteredQuotes(String query) async {
+  	List<Quote> initial = await readQuotes();
+
+  	List<Quote> set = new List();
+
+  	for(Quote quote in initial) {
+  		if (quote.body.contains(query))
+  			set.add(quote);
+		}
+
+		return set;
+	}
+
 	Future<List<Quote>> readQuotes() async {
   	Database _db = await database;
-		var res = await _db.query(DataContract.QUOTES_TABLE_NAME);
+		return readQuotesInternal(_db);
+  }
+
+
+	Future<List<Quote>> readQuotesInternal(Database db) async {
+		var res = await db.query(DataContract.QUOTES_TABLE_NAME);
 		List<Quote> list = res.isNotEmpty ? res.map((c) => Quote.fromMap(c)).toList() : null;
 		return list;
   }

@@ -7,7 +7,17 @@ import 'package:flutter/material.dart';
 import 'camera_view.dart';
 import 'main.dart';
 
+
+enum Mode {
+  Add,
+  Edit
+}
+
 class NEditView extends StatefulWidget {
+  final Mode mode;
+  final Quote quote;
+  NEditView({this.mode, this.quote});
+
   @override
   _NEditViewState createState() => _NEditViewState();
 }
@@ -15,10 +25,32 @@ class NEditView extends StatefulWidget {
 class _NEditViewState extends State<NEditView> {
   List<Widget> temporaryList = TagWidget.tempTagWidgets();
 
-  final bodyController = TextEditingController();
-  final authorController = TextEditingController();
-  final originController = TextEditingController();
-  final commentController = TextEditingController();
+  TextEditingController  bodyController;
+  TextEditingController  authorController;
+  TextEditingController  originController;
+  TextEditingController  commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    switch(widget.mode) {
+
+      case Mode.Edit:
+        bodyController = new TextEditingController(text: widget.quote.body);
+        authorController = new TextEditingController(text: widget.quote.author);
+        originController = new TextEditingController(text: widget.quote.origin);
+        commentController = new TextEditingController(text: widget.quote.comment);
+        break;
+      case Mode.Add:
+      default:
+        bodyController = new TextEditingController(text: '');
+        authorController = new TextEditingController(text: '');
+        originController = new TextEditingController(text: '');
+        commentController = new TextEditingController(text: '');
+        break;
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -299,6 +331,10 @@ class _NEditViewState extends State<NEditView> {
         ),
       ),
     );
+  }
+
+  String titleText() {
+    return widget.mode == Mode.Add ? "Add quote" : "Edit quote";
   }
 
   saveNewQuote(BuildContext context) async {
