@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="DefaultTextDark">#303030</color>
+    <color name="DefaultTextGray">#6a6b71</color>
+
+    <color name="GrayscaleDark">#303030</color>
+    <color name="GrayscaleMain">#414141</color>
+    <color name="GrayscaleMainLight">#c1c1c1</color>
+    <color name="GrayscaleMid">#D0D0D0</color>
+    <color name="GrayscaleLight">#EFEFEF</color>
+
+    <color name="DefaultDark">#1c223c</color>
+    <color name="DefaultMain">#232941</color>
+    <color name="DefaultMainLight">#b9c0e3</color>
+    <color name="DefaultMid">#d2d7ed</color>
+    <color name="DefaultLight">#e6e9f6</color>
+
+    <color name="LogoSideColor">#7f8dad</color>
+
+</resources>

@@ -34,30 +34,27 @@ class _QuoteCardSmallState extends State<QuoteCardSmall> {
       ),
       child: widget.quote.isAd
         ?
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: double.infinity,
-            height: 320,
-            child: NativeAdView(
-              onParentViewCreated: (_) {
-              },
-              androidParam: AndroidParam()
-                ..placementId = "ca-app-pub-3940256099942544/2247696110" // test
-                ..packageName = "fhiquo.poc"
-                ..layoutName = "ad_unified_list"
-                ..attributionText = "AD",
-              /*
-              iosParam: IOSParam()
-                ..placementId = "ca-app-pub-3940256099942544/3986624511" // test
-                ..bundleId = "{{YOUR_IOS_APP_BUNDLE_ID}}"
-                ..layoutName = "{{YOUR_CREATED_LAYOUT_FILE_NAME}}"
-                ..attributionText = "SPONSORED",
-              onAdImpression: () => print("onAdImpression!!!"),
-                             */
-              onAdClicked: () => print("onAdClicked!!!"),
-              onAdFailedToLoad: (Map<String, dynamic> error) => print("onAdFailedToLoad!!! $error"),
-            ),
+        SizedBox(
+          width: double.infinity,
+          height: 120,
+          child: NativeAdView(
+            onParentViewCreated: (_) {
+            },
+            androidParam: AndroidParam()
+              ..placementId = "ca-app-pub-3940256099942544/2247696110" // test
+              ..packageName = "fhiquo.poc"
+              ..layoutName = "ad_unified_list"
+              ..attributionText = "AD",
+            /*
+            iosParam: IOSParam()
+              ..placementId = "ca-app-pub-3940256099942544/3986624511" // test
+              ..bundleId = "{{YOUR_IOS_APP_BUNDLE_ID}}"
+              ..layoutName = "{{YOUR_CREATED_LAYOUT_FILE_NAME}}"
+              ..attributionText = "SPONSORED",
+            onAdImpression: () => print("onAdImpression!!!"),
+                           */
+            onAdClicked: () => print("onAdClicked!!!"),
+            onAdFailedToLoad: (Map<String, dynamic> error) => print("onAdFailedToLoad!!! $error"),
           ),
         )
         :
