@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:fhiquo/list_view.dart';
 
 import 'package:native_ads/native_ads.dart';
+import 'package:provider/provider.dart';
+
+import 'internal/state/list_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NativeAds.initialize();
-  runApp(MaterialApp(
-    home: NListView(),
-  ));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ListModel(),
+      child: MaterialApp(
+        home: NListView(),
+      )
+    )
+  );
 }
 
 Map<int, Color> todoColor01 =

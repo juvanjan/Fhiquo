@@ -7,9 +7,16 @@ import 'package:fhiquo/settings_view.dart';
 import 'package:fhiquo/widgets/quote_card_small_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'internal/data/quote.dart';
+import 'internal/state/list_model.dart';
 import 'main.dart';
+
+enum NListViewState {
+  Normal,
+  Action
+}
 
 class NListView extends StatefulWidget {
   @override
@@ -49,49 +56,48 @@ class _NListViewState extends State<NListView> {
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
-
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            physics: const AlwaysScrollableScrollPhysics (),
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text(''),
-                decoration: BoxDecoration(
-                  color: MaterialColor(0xFF232941, todoColor01),
+            child: ListView(
+              // Important: Remove any padding from the ListView.
+              physics: const AlwaysScrollableScrollPhysics (),
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  child: Text(''),
+                  decoration: BoxDecoration(
+                    color: MaterialColor(0xFF232941, todoColor01),
+                  ),
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NSettingsView()));
-                },
-                child: Container(
-                  padding: EdgeInsets.all(14),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 14),
-                        child: Icon(Icons.settings),
-                      ),
-                      Flexible(
-                        child: Text('Settings',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        )
-                      ),
-                    )
-                  ],
-                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NSettingsView()));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(14),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 14),
+                          child: Icon(Icons.settings),
+                        ),
+                        Flexible(
+                          child: Text('Settings',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          )
+                        ),
+                      )
+                    ],
+                  ),
+                )
               )
-            )
-          ],
+            ],
+          ),
         ),
-      ),
         body: Center(
           child: Container(
             padding: EdgeInsets.all(8),
             child: FutureBuilder<List>(
-              future: DataHelper.internal().getFilteredQuotesWithAds(query),
+              future: DataHelper.internal().getFilteredQuotesWithAds(context, query),
               initialData: List<Quote>(),
               builder: (context, snapshot) {
               return snapshot.hasData ?
@@ -115,19 +121,18 @@ class _NListViewState extends State<NListView> {
   _NListViewState() {
     controller.addListener(textChanged);
     searchBar = new SearchBar(
-        inBar: true,
-        buildDefaultAppBar: buildAppBar,
-        setState: setState,
-        onSubmitted: onSubmitted,
-        controller: controller,
-        onCleared: () {
-          print("cleared");
-        },
-        onClosed: () {
-          print("closed");
-        });
-    //controller.addListener(textChanged);
-
+      inBar: true,
+      buildDefaultAppBar: buildAppBar,
+      setState: setState,
+      onSubmitted: onSubmitted,
+      controller: controller,
+      onCleared: () {
+        print("cleared");
+      },
+      onClosed: () {
+        print("closed");
+      }
+    );
   }
 
 
@@ -145,28 +150,102 @@ class _NListViewState extends State<NListView> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-      title: Text(''),
-        leading: IconButton(
-        icon: new Icon(Icons.menu),
-        onPressed: () => _scaffoldKey.currentState.openDrawer(),
+      centerTitle: false,
+      title: Consumer<ListModel>(
+        builder: (context, model, child) {
+          return model.isNormalState() ? Text('1 / *') : Text('${model.selectedIds.length} / ${model.getListSize()}');
+        },
+      ),
+      leading: Consumer<ListModel>(
+        builder: (context, model, child) {
+          return Visibility(
+            visible: model.isNormalState(),
+            child: IconButton(
+              icon: new Icon(Icons.menu),
+              onPressed: () => _scaffoldKey.currentState.openDrawer(),
+            ),
+          );
+        },
       ),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NEditView(mode: Mode.Add, quote: null,))).then((value) {
-              if (value == true) {
-                setState(() {
-                  // refresh page 1 here, you may want to reload your SharedPreferences here according to your needs
-                });
-              }
-            });
+        Consumer<ListModel>(
+          builder: (context, model, child) {
+            return Visibility(
+              visible: model.isNormalState(),
+              child: IconButton(
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => NEditView(mode: Mode.Add, quote: null,))).then((value) {
+                    if (value == true) {
+                      setState(() {
+                        // refresh page 1 here, you may want to reload your SharedPreferences here according to your needs
+                      });
+                    }
+                  });
+                },
+              ),
+            );
           },
         ),
-        searchBar.getSearchAction(context),
+        Consumer<ListModel>(
+          builder: (context, model, child) {
+            return Visibility(
+              visible: model.isNormalState(),
+              child: searchBar.getSearchAction(context),
+            );
+          },
+        ),
+        Consumer<ListModel>(
+          builder: (context, model, child) {
+            return Visibility(
+              visible: !model.isNormalState(),
+              child: IconButton(
+                icon: Icon(
+                  Icons.playlist_add_check,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+
+                },
+              ),
+            );
+          },
+        ),
+        Consumer<ListModel>(
+          builder: (context, model, child) {
+            return Visibility(
+              visible: !model.isNormalState(),
+              child: IconButton(
+                icon: Icon(
+                  Icons.format_line_spacing,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+
+                },
+              ),
+            );
+          },
+        ),
+        Consumer<ListModel>(
+          builder: (context, model, child) {
+            return Visibility(
+              visible: !model.isNormalState(),
+              child: IconButton(
+                icon: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  model.cancelActionMode();
+                },
+              ),
+            );
+          },
+        ),
       ],
     );
   }

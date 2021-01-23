@@ -3,6 +3,9 @@ import 'package:fhiquo/internal/data/data_contract.dart';
 import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/internal/data/tag.dart';
 import 'package:fhiquo/internal/helpers/ad_helper.dart';
+import 'package:fhiquo/internal/state/list_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DataHelper {
@@ -99,7 +102,7 @@ class DataHelper {
 		}
 	}
 
-		Future<List<Quote>> getFilteredQuotesWithAds(String query) async {
+		Future<List<Quote>> getFilteredQuotesWithAds(BuildContext context, String query) async {
 			List<Quote> initial = await getFilteredQuotes(query);
 			List<Quote> set = new List();
 
@@ -115,6 +118,8 @@ class DataHelper {
 					ad_counter++;
 				}
 			}
+			
+			Provider.of<ListModel>(context, listen: false).setListSize(counter - ad_counter);
 
 			return set;
 		}

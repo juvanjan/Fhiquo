@@ -7,7 +7,7 @@ class SearchToolbar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchToolbar> {
-SearchBar searchBar;
+  SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   AppBar buildAppBar(BuildContext context) {
