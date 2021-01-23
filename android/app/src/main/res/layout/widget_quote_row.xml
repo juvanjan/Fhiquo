@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/widget_quote_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:minWidth="120dp"
+        android:gravity="start"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/BodyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="test"
+            android:textColor="@android:color/black"
+            android:textColorLink="?android:attr/colorForeground"/>
+
+        <TextView
+            android:id="@+id/AuthorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="end"
+            android:maxLines="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="12dp"
+            android:text="test"
+            android:textColor="@android:color/black"
+            android:textColorLink="?android:attr/colorForeground"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+</LinearLayout>

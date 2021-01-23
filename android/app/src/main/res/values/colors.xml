@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <color name="WidgetTransparentWhite180">#b4ffffff</color>
+    <color name="WidgetTransparentWhite200">#c8ffffff</color>
+
     <color name="DefaultTextDark">#303030</color>
     <color name="DefaultTextGray">#6a6b71</color>
 
