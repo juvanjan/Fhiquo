@@ -97,7 +97,7 @@ class _NListViewState extends State<NListView> {
           child: Container(
             padding: EdgeInsets.all(8),
             child: FutureBuilder<List>(
-              future: DataHelper.internal().getFilteredQuotesWithAds(context, query),
+              future: DataHelper.internal().getFilteredQuotes(query),
               initialData: List<Quote>(),
               builder: (context, snapshot) {
               return snapshot.hasData ?
@@ -153,7 +153,7 @@ class _NListViewState extends State<NListView> {
       centerTitle: false,
       title: Consumer<ListModel>(
         builder: (context, model, child) {
-          return model.isNormalState() ? Text('1 / *') : Text('${model.selectedIds.length} / ${model.getListSize()}');
+          return model.isNormalState() ? Text('') : Text('${model.selectedIds.length} / ${model.getListSize()}');
         },
       ),
       leading: Consumer<ListModel>(
