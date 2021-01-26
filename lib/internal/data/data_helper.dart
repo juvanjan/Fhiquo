@@ -7,6 +7,7 @@ import 'package:fhiquo/internal/state/list_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import "dart:math";
 
 class DataHelper {
   static final DataHelper _instance = new DataHelper.internal();
@@ -102,27 +103,32 @@ class DataHelper {
 		}
 	}
 
-		Future<List<Quote>> getFilteredQuotesWithAds(BuildContext context, String query) async {
-			List<Quote> initial = await getFilteredQuotes(query);
-			List<Quote> set = new List();
+	Future<Quote> getRandomQuote() async {
+  	List<Quote> quotes = await getFilteredQuotes("");
+  	return quotes[new Random().nextInt(quotes.length)];
+	}
 
-			int counter = 1;
-			int ad_counter = 0;
-			for (var quote in initial) {
-				set.add(quote);
+	Future<List<Quote>> getFilteredQuotesWithAds(BuildContext context, String query) async {
+		List<Quote> initial = await getFilteredQuotes(query);
+		List<Quote> set = new List();
+
+		int counter = 1;
+		int ad_counter = 0;
+		for (var quote in initial) {
+			set.add(quote);
+			counter++;
+
+			if (counter % AdHelper.FREQUENCY_OF_ADS == 0) {
+				set.add(Quote.createAd(((counter / AdHelper.FREQUENCY_OF_ADS - 1) % AdHelper.NUMBER_OF_ADS).toInt()));
 				counter++;
-
-				if (counter % AdHelper.FREQUENCY_OF_ADS == 0) {
-					set.add(Quote.createAd(((counter / AdHelper.FREQUENCY_OF_ADS - 1) % AdHelper.NUMBER_OF_ADS).toInt()));
-					counter++;
-					ad_counter++;
-				}
+				ad_counter++;
 			}
-			
-			Provider.of<ListModel>(context, listen: false).setListSize(counter - ad_counter);
-
-			return set;
 		}
+
+		Provider.of<ListModel>(context, listen: false).setListSize(counter - ad_counter);
+
+		return set;
+	}
 
 	Future<List<Quote>> getFilteredQuotes(String query) async {
   	List<Quote> initial = await readQuotes();

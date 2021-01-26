@@ -38,6 +38,10 @@ dependencies:
   native_ads:
   provider: ^4.0.0
   home_widget: ^0.0.2
+  workmanager:
+    git:
+      url: https://github.com/fluttercommunity/flutter_workmanager
+      ref: 1c4e162ea4e71855856fb9e55a1545b3dae9a25d
 
 dev_dependencies:
   flutter_test:

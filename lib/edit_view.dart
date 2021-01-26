@@ -3,6 +3,7 @@ import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/widgets/tag_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'camera_view.dart';
 import 'main.dart';
@@ -341,4 +342,5 @@ class _NEditViewState extends State<NEditView> {
     await DataHelper.internal().insertQuote(Quote.createQuote(0, authorController.text, originController.text, bodyController.text, commentController.text, new List<int>()));
     Navigator.pop(context, true);
   }
+
 }

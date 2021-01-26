@@ -1,4 +1,4 @@
-package fhiquo.fhiquo
+package fhiquo.poc
 
 import io.flutter.embedding.android.FlutterActivity
 

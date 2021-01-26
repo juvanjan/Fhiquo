@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 
@@ -7,7 +8,9 @@ import 'package:fhiquo/settings_view.dart';
 import 'package:fhiquo/widgets/quote_card_small_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'internal/data/quote.dart';
 import 'internal/state/list_model.dart';
@@ -29,6 +32,12 @@ class _NListViewState extends State<NListView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var controller = new TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    HomeWidget.setAppGroupId('YOUR_GROUP_ID');
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +122,12 @@ class _NListViewState extends State<NListView> {
               },
             )
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () async {
+            buttonPressed();
+          },
         ),
       ),
     );
@@ -249,6 +264,65 @@ class _NListViewState extends State<NListView> {
       ],
     );
   }
+
+
+
+
+
+
+
+
+  void buttonPressed() async{
+    await _sendAndUpdate();
+  }
+
+
+
+  Future<void> _sendData() async {
+    try {
+      return Future.wait([
+        HomeWidget.saveWidgetData<String>('title', "_titleController.text"),
+        HomeWidget.saveWidgetData<String>('message'," _messageController.text"),
+      ]);
+    } on PlatformException catch (exception) {
+      debugPrint('Error Sending Data. $exception');
+    }
+  }
+
+  Future<void> _updateWidget() async {
+    try {
+      return HomeWidget.updateWidget(
+          name: 'HomeWidgetExampleProvider', iOSName: 'HomeWidgetExample');
+    } on PlatformException catch (exception) {
+      debugPrint('Error Updating Widget. $exception');
+    }
+  }
+
+
+  Future<void> _sendAndUpdate() async {
+    await _sendData();
+    await _updateWidget();
+  }
+
+  void _startBackgroundUpdate() {
+    Workmanager.registerPeriodicTask('1', 'widgetBackgroundUpdate',
+        frequency: Duration(minutes: 15));
+  }
+
+  void _stopBackgroundUpdate() {
+    Workmanager.cancelByUniqueName('1');
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
