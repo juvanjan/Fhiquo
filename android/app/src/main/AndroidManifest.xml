@@ -53,7 +53,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <receiver android:name="HomeWidgetExampleProvider" >
+        <service android:name=".WidgetViewService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver android:name="QuoteAppWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

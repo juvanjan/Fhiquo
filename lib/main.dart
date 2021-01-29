@@ -21,9 +21,10 @@ void callbackDispatcher() {
     Quote quote = await DataHelper.internal().getRandomQuote();
     return Future.wait<bool>([
 
-      HomeWidget.saveWidgetData('title', quote.body),
-      HomeWidget.saveWidgetData('message', '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}'),
-      HomeWidget.updateWidget( name: 'HomeWidgetExampleProvider', iOSName: 'HomeWidgetExample'),
+      HomeWidget.saveWidgetData('body', quote.body),
+      HomeWidget.saveWidgetData('author', quote.author),
+      HomeWidget.saveWidgetData('updated', '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')} ${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}'),
+      HomeWidget.updateWidget( name: 'QuoteAppWidget', iOSName: 'HomeWidgetExample'),
     ]).then((value) {
       return !value.contains(false);
     });
