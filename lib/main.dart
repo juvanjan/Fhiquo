@@ -31,10 +31,27 @@ void callbackDispatcher() {
   });
 }
 
+void callbackDispatcher2() {
+  Workmanager.executeTask((taskName, inputData) async {
+    debugPrint("Native called background task: $taskName");
+
+    final now = DateTime.now();
+
+    Quote quote = await DataHelper.internal().getRandomQuote();
+    return Future.wait<bool>([
+      HomeWidget.saveWidgetData('title', quote.body),
+      HomeWidget.saveWidgetData('message', '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}'),
+      HomeWidget.updateWidget(name: 'HomeWidgetExampleProvider', iOSName: 'HomeWidgetExample'),
+    ]).then((value) {
+      return !value.contains(false);
+    });
+  });
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager.initialize(callbackDispatcher, isInDebugMode: true)
-      .then((value) =>_startBackgroundUpdate());
+  Workmanager.initialize(callbackDispatcher, isInDebugMode: false).then((value) =>_startBackgroundUpdate());
+  Workmanager.initialize(callbackDispatcher2, isInDebugMode: false).then((value) =>_startBackgroundUpdate2());
   NativeAds.initialize();
 
   runApp(
@@ -63,4 +80,8 @@ Map<int, Color> todoColor01 =
 
 void _startBackgroundUpdate() {
   Workmanager.registerPeriodicTask('3', 'widgetBackgroundUpdate', frequency: Duration(minutes: 15), tag: "fhiquo");
+}
+
+void _startBackgroundUpdate2() {
+  Workmanager.registerPeriodicTask('4', 'widgetBackgroundUpdate', frequency: Duration(minutes: 15), tag: "fhiquo2");
 }
