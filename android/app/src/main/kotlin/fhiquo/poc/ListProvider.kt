@@ -34,6 +34,7 @@ class ListProvider(private val context: Context, intent: Intent) : RemoteViewsSe
 
         // Next, set a fill-intent, which will be used to fill in the pending intent template
         // that is set on the collection view in StackWidgetProvider.
+        /*
         val extras = Bundle()
         extras.putInt(Codes.INTENT_EXTRA_QUOTE_ID_WIDGET, quoteId)
         val fillInIntent = Intent()
@@ -41,6 +42,7 @@ class ListProvider(private val context: Context, intent: Intent) : RemoteViewsSe
         // Make it possible to distinguish the individual on-click
         // action of a given item
         bodyView.setOnClickFillInIntent(R.id.widget_quote_frame, fillInIntent)
+        */
         return bodyView
     }
 
@@ -75,7 +77,5 @@ class ListProvider(private val context: Context, intent: Intent) : RemoteViewsSe
         authorText = intent.getStringExtra(Codes.INTENT_EXTRA_AUTHOR_TEXT)
         updatedText = intent.getStringExtra(Codes.INTENT_EXTRA_UPDATED_TEXT)
         quoteId = intent.getIntExtra(Codes.INTENT_EXTRA_QUOTE_ID_WIDGET, -1)
-
-        println("NNNNNNNNNNNNNNNNNNNNNN - ListProvider");
     }
 }

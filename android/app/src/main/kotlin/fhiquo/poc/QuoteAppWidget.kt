@@ -13,14 +13,16 @@ class QuoteAppWidget : HomeWidgetProvider() {
 
         appWidgetIds.forEach { widgetId ->
 
-
             // List view
             val quoteText: String = widgetData.getString("body", null) ?: "No Title Set";
             val authorText: String = widgetData.getString("author", null) ?: "No message Set";
             val updatedText: String = widgetData.getString("updated", null) ?: "No updated Set";
             val quoteId: Int = 0;
-            val remoteViews = updateWidgetListView(context, quoteText, authorText, updatedText, quoteId, widgetId);
 
+            val remoteViews = updateWidgetListView(context, quoteText, authorText, updatedText, quoteId, widgetId);
+            remoteViews.setOnClickPendingIntent(R.id.widget_container, PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0));
+
+            /*
             // Refresh button
             // remoteViews.setOnClickPendingIntent(R.id.RefreshWidgetButton, getPendingIntent(context, Codes.WIDGET_REFRESH_CLICKED, Intent(context, javaClass)))
 
@@ -40,7 +42,7 @@ class QuoteAppWidget : HomeWidgetProvider() {
             } catch (e: ActivityNotFoundException) {
                 //Toast.makeText(context.applicationContext, "There was a problem loading the application" + " ", Toast.LENGTH_SHORT).show()
             }
-            //val watchWidget = ComponentName(context, QuoteAppWidget::class.java)
+            */
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews)
         }
@@ -48,7 +50,6 @@ class QuoteAppWidget : HomeWidgetProvider() {
     }
 
     private fun updateWidgetListView(context: Context, quoteText: String, authorText: String, updatedText: String,quoteId: Int, appWidgetId: Int): RemoteViews {
-        println("NNNNNNNNNNNNNNNNNNNNNN - updateWidgetListView");
 
         return RemoteViews(context.packageName, R.layout.widget_main).apply {
             //RemoteViews Service needed to provide adapter for ListView
@@ -63,6 +64,7 @@ class QuoteAppWidget : HomeWidgetProvider() {
             setRemoteAdapter(R.id.widget_list_view, svcIntent)
             //setting an empty view in case of no data
             setEmptyView(R.id.widget_list_view, R.id.empty_view)
+
             //setting lock icon
             //remoteViews.setInt(R.id.LockWidgetButtonImage, "setBackgroundResource", R.drawable.ic_lock_open_white_24dp)
             //setting refresh icon
