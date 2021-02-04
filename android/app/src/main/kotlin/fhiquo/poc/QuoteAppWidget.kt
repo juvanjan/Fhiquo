@@ -6,6 +6,9 @@ import android.content.*
 import android.net.Uri
 import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetProvider
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 
 class QuoteAppWidget : HomeWidgetProvider() {
 
@@ -13,10 +16,13 @@ class QuoteAppWidget : HomeWidgetProvider() {
 
         appWidgetIds.forEach { widgetId ->
 
+            val simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+            val currentDateAndTime: String = simpleDateFormat.format(Date())
+
             // List view
             val quoteText: String = widgetData.getString("body", null) ?: "No Title Set";
             val authorText: String = widgetData.getString("author", null) ?: "No message Set";
-            val updatedText: String = widgetData.getString("updated", null) ?: "No updated Set";
+            val updatedText: String = widgetData.getString("updated", null) ?: currentDateAndTime;
             val quoteId: Int = 0;
 
             val remoteViews = updateWidgetListView(context, quoteText, authorText, updatedText, quoteId, widgetId);
@@ -71,6 +77,11 @@ class QuoteAppWidget : HomeWidgetProvider() {
             //remoteViews.setInt(R.id.RefreshWidgetButtonImage, "setBackgroundResource", R.drawable.ic_refresh_white_24dp)
         }
 
+    }
+
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
     }
 
 }

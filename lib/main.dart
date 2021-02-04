@@ -50,7 +50,7 @@ void callbackDispatcher2() {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager.initialize(callbackDispatcher, isInDebugMode: true).then((value) =>_startBackgroundUpdate());
+  Workmanager.initialize(callbackDispatcher, isInDebugMode: false).then((value) =>_startBackgroundUpdate());
   //Workmanager.initialize(callbackDispatcher2, isInDebugMode: true).then((value) =>_startBackgroundUpdate2());
   NativeAds.initialize();
 
