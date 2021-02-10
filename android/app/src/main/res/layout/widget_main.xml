@@ -1,18 +1,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    android:id="@+id/widget_container"
     android:gravity="center">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start"
+        android:gravity="center"
         android:background="@color/DefaultMain">
 
         <TextView
@@ -27,7 +25,7 @@
             android:paddingEnd="6dp"
             android:gravity="center"
             android:textSize="18sp"
-            android:text="Fhiquo" />
+            android:text="Phiquo" />
 
         <ImageButton
             android:id="@+id/AppWidgetButton"
@@ -37,7 +35,7 @@
             android:layout_alignParentStart="true"
             android:background="@drawable/ic_phiquologo"
             app:srcCompat="@android:color/transparent" />
-        <!--
+<!--
         <LinearLayout
             android:id="@+id/LockWidgetButton"
             android:layout_width="40dp"
@@ -52,7 +50,7 @@
                 android:layout_height="24dp"
                 android:background="@drawable/ic_lock_open_white_24dp"/>
         </LinearLayout>
-
+-->
         <LinearLayout
             android:id="@+id/RefreshWidgetButton"
             android:layout_width="40dp"
@@ -67,7 +65,7 @@
                 android:layout_height="28dp"
                 android:background="@drawable/ic_refresh_white_24dp"/>
         </LinearLayout>
-        -->
+
     </RelativeLayout>
 
     <LinearLayout
@@ -78,22 +76,6 @@
         android:gravity="center"
         android:orientation="vertical"
         android:background="@color/WidgetTransparentWhite180">
-<!--
-        <TextView
-            android:id="@+id/widget_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            tools:text="Title" />
-
-        <TextView
-            android:id="@+id/widget_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            tools:text="Message" />
-        -->
 
         <ListView
             android:id="@+id/widget_list_view"

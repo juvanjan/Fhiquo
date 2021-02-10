@@ -9,6 +9,8 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import fhiquo.poc.Codes
 import fhiquo.poc.R
+import fhiquo.poc.WidgetDatabase
+import fhiquo.poc.WidgetQuote
 
 
 /*
@@ -16,47 +18,42 @@ import fhiquo.poc.R
  *  with few changes
  */
 class ListProvider(private val context: Context, intent: Intent) : RemoteViewsService.RemoteViewsFactory {
-    private val appWidgetId: Int
-    private val quoteText: String
-    private val authorText: String
-    private val updatedText: String
-    private val quoteId: Int
+    private val appWidgetId: Int = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+    private val quoteText: String = intent.getStringExtra(Codes.INTENT_EXTRA_QUOTE_TEXT)
+    private val authorText: String = intent.getStringExtra(Codes.INTENT_EXTRA_AUTHOR_TEXT)
+    private val updatedText: String = intent.getStringExtra(Codes.INTENT_EXTRA_UPDATED_TEXT)
+    private val quoteId: Int = intent.getIntExtra(Codes.INTENT_EXTRA_QUOTE_ID_WIDGET, -1)
 
     /*
      * Similar to getView of Adapter where instead of View we return RemoteViews
      */
     override fun getViewAt(position: Int): RemoteViews {
         val bodyView = RemoteViews(context.packageName, R.layout.widget_quote_row)
-        bodyView.setTextViewText(R.id.BodyText, quoteText)
-        bodyView.setTextViewText(R.id.AuthorText, authorText)
-        bodyView.setViewVisibility(R.id.AuthorText, if (authorText.isNullOrEmpty()) View.GONE else View.VISIBLE)
+
+        val db = WidgetDatabase(context);
+        val quote = db.getRandomQuote()
+
+        bodyView.setTextViewText(R.id.BodyText, getBody(quote))
+        bodyView.setTextViewText(R.id.AuthorText, getAuthor(quote))
+        bodyView.setViewVisibility(R.id.AuthorText, if (getAuthor(quote).isNullOrEmpty()) View.GONE else View.VISIBLE)
         bodyView.setTextViewText(R.id.UpdatedText, updatedText)
 
-        // Next, set a fill-intent, which will be used to fill in the pending intent template
-        // that is set on the collection view in StackWidgetProvider.
-        /*
-        val extras = Bundle()
-        extras.putInt(Codes.INTENT_EXTRA_QUOTE_ID_WIDGET, quoteId)
-        val fillInIntent = Intent()
-        fillInIntent.putExtras(extras)
-        // Make it possible to distinguish the individual on-click
-        // action of a given item
-        bodyView.setOnClickFillInIntent(R.id.widget_quote_frame, fillInIntent)
-        */
         return bodyView
     }
 
-    override fun onCreate() {
-
+    private fun getBody(quote: WidgetQuote): String {
+        return if (quote.body != "ERROR") quote.body else quoteText
     }
 
-    override fun getLoadingView(): RemoteViews? = null
+    private fun getAuthor(quote: WidgetQuote): String {
+        return if (quote.author != "ERROR") quote.author else authorText
+    }
 
+    override fun onCreate() {}
+    override fun getLoadingView(): RemoteViews? = null
     override fun onDataSetChanged() {}
     override fun onDestroy() {}
-    override fun getCount(): Int {
-        return 1
-    }
+    override fun getCount(): Int = 1
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
@@ -66,16 +63,8 @@ class ListProvider(private val context: Context, intent: Intent) : RemoteViewsSe
         return true
     }
 
-
     override fun getViewTypeCount(): Int {
         return 1
     }
 
-    init {
-        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-        quoteText = intent.getStringExtra(Codes.INTENT_EXTRA_QUOTE_TEXT)
-        authorText = intent.getStringExtra(Codes.INTENT_EXTRA_AUTHOR_TEXT)
-        updatedText = intent.getStringExtra(Codes.INTENT_EXTRA_UPDATED_TEXT)
-        quoteId = intent.getIntExtra(Codes.INTENT_EXTRA_QUOTE_ID_WIDGET, -1)
-    }
 }
