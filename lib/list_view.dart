@@ -1,3 +1,4 @@
+import 'package:fhiquo/gallery_view.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
@@ -111,7 +112,7 @@ class _NListViewState extends State<NListView> {
               builder: (context, snapshot) {
               return snapshot.hasData ?
                ListView.builder(
-                itemCount: snapshot.data.length,
+                  itemCount: snapshot.data.length,
                   itemBuilder: (context, position) {
                     return new QuoteCardSmall(quote: snapshot.data[position]);
                   },
@@ -273,7 +274,7 @@ class _NListViewState extends State<NListView> {
 
 
   void buttonPressed() async{
-    await _sendAndUpdate();
+    Navigator.push(context, MaterialPageRoute(builder: (context) => NGalleryView()));
   }
 
 

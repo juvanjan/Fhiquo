@@ -1,3 +1,4 @@
+import 'package:fhiquo/gallery_view.dart';
 import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/internal/state/list_model.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class _QuoteCardSmallState extends State<QuoteCardSmall> {
             InkWell(
             onTap: () {
               if (model.isNormalState())
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NEditView(mode: Mode.Edit, quote: widget.quote,)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NGalleryView(initialQuote: widget.quote,)));
               else
                 model.toggleSelectedId(widget.quote.id);
             },
