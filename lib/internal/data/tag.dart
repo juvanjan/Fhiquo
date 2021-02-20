@@ -63,4 +63,28 @@ class Tag{
     return set;
   }
 
+    static List<Tag> tempTags2() {
+
+    var set = new List<Tag>();
+
+    set.add(Tag.createTag(0, "ADVICE"));
+    set.add(Tag.createTag(1, "WISDOM"));
+    set.add(Tag.createTag(2, "INSPIRATION"));
+    set.add(Tag.createTag(3, "PHILOSOPHY"));
+    set.add(Tag.createTag(4, "POETRY"));
+    set.add(Tag.createTag(5, "DREAMS"));
+    set.add(Tag.createTag(6, "DREAMS"));
+    set.add(Tag.createTag(7, "DREAMS"));
+    set.add(Tag.createTag(8, "DREAMS"));
+    set.add(Tag.createTag(9, "DREAMS"));
+    set.add(Tag.createTag(10, "DREAMS"));
+    set.add(Tag.createTag(11, "DREAMS"));
+    set.add(Tag.createTag(12, "DREAMS"));
+    set.add(Tag.createTag(13, "DREAMS"));
+    set.add(Tag.createTag(14, "DREAMS"));
+    set.add(Tag.createTag(15, "DREAMS"));
+
+    return set;
+  }
+
 }

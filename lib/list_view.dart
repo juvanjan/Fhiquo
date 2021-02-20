@@ -1,4 +1,5 @@
 import 'package:fhiquo/gallery_view.dart';
+import 'package:fhiquo/widgets/tag_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
@@ -16,6 +17,7 @@ import 'package:workmanager/workmanager.dart';
 import 'internal/data/quote.dart';
 import 'internal/state/list_model.dart';
 import 'main.dart';
+import 'widgets/draggable_sheet.dart';
 
 enum NListViewState {
   Normal,
@@ -28,10 +30,21 @@ class NListView extends StatefulWidget {
 }
 
 class _NListViewState extends State<NListView> {
+  List<Widget> temporaryList = TagWidget.tempTagWidgets();
   SearchBar searchBar;
   String query;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var controller = new TextEditingController();
+  var _controller = SnappingSheetController();
+  bool switchOn = false;
+
+
+
+  void _onSwitchChanged(bool value) {
+    setState(() {
+      switchOn = value;
+    });
+  }
 
   @override
   void initState() {
@@ -103,33 +116,262 @@ class _NListViewState extends State<NListView> {
             ],
           ),
         ),
-        body: Center(
-          child: Container(
-            padding: EdgeInsets.all(8),
-            child: FutureBuilder<List>(
-              future: DataHelper.internal().getFilteredQuotes(query),
-              initialData: List<Quote>(),
-              builder: (context, snapshot) {
-              return snapshot.hasData ?
-               ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, position) {
-                    return new QuoteCardSmall(quote: snapshot.data[position]);
-                  },
-                )
-                : Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+        body:  SnappingSheet(
+
+          grabbingHeight: 40,
+          snapPositions: [
+            SnapPosition(positionFactor: 0.54),
+            SnapPosition(positionFactor: 1.0),
+          ],
+          snappingSheetController: _controller,
+          sheetAbove: SnappingSheetContent(
+            child: Container(
+              child:
+                SingleChildScrollView(
+
+                  child: Column(
+                    children: [
+
+
+                      Container(
+                        margin: EdgeInsets.fromLTRB(14,8,14,0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(right: 8, top: 8),
+                              child: Icon(Icons.person),
+                            ),
+                            Flexible(
+                              child: Container(
+                                child: Stack(
+                                  children: [
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        hintText: "author / speaker / character / ...",
+                                        hintStyle: TextStyle(color: Color(0xFFb9c0e3)),
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        fillColor: Color(0xFFe6e9f6),
+                                        filled: true,
+                                        contentPadding: const EdgeInsets.all(8.0),
+                                        isDense: true,
+                                      ),
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                    ),
+                                  ],
+                                )
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+                      Container(
+                        margin: EdgeInsets.fromLTRB(14,8,14,0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(right: 8, top: 8),
+                              child: Icon(Icons.star),
+                            ),
+                            Flexible(
+                              child: Container(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: "source / book / event / movie / song / ...",
+                                    hintMaxLines: 5,
+                                    hintStyle: TextStyle(color: Color(0xFFb9c0e3)),
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    fillColor: Color(0xFFe6e9f6),
+                                    filled: true,
+                                    contentPadding: const EdgeInsets.all(8.0),
+                                    isDense: true,
+                                  ),
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  minLines: 1,
+                                ),
+                              )
+                            ),
+                          ],
+                        )
+                      ),
+
+
+                      Container(
+                        margin: EdgeInsets.fromLTRB(14,8,14,0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(right: 8, top: 8),
+                              child: Icon(Icons.bookmark),
+                            ),
+                            Flexible(
+                              child: Column(
+                                children: [
+                                  Container(
+
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        hintText: "search tag...",
+                                        hintMaxLines: 5,
+                                        hintStyle: TextStyle(color: Color(0xFFb9c0e3)),
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        fillColor: Color(0xFFd2d7ed),
+                                        filled: true,
+                                        contentPadding: const EdgeInsets.all(8.0),
+                                        isDense: true,
+                                      ),
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                      minLines: 1,
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Color(0xFFe6e9f6),
+                                    height: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.fromLTRB(30, 4, 2, 2),
+                        child: SizedBox(
+
+                        height: 120,
+                        child: SingleChildScrollView(
+                          child: Container(
+
+                            //padding: EdgeInsets.only(left: 32, top: 12),
+                            child: Wrap(
+                              spacing: 3.0,
+                              runSpacing: 2.0,
+                              alignment: WrapAlignment.center,
+                              direction: Axis.horizontal,
+                              children: temporaryList,
+                            ),
+                          ),
+                        )
+                      ),
+                      )
+
+
+
+
+                    ],
+                  ),
+
+                ),
+
+            ),
+            heightBehavior: SnappingSheetHeight.fit(),
+          ),
+
+          lockOverflowDrag: true,
+          grabbing: Card(
+            color: MaterialColor(0xFFd2d7ed, todoColor01),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+            margin: EdgeInsets.all(0),
+            elevation: 7,
+            child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Filter:"),
+                Container(
+
+                  child:
+                    IconButton(
+
+                      icon: Icon(Icons.keyboard_arrow_up),
+                      color: Colors.black,
+                      onPressed: () {
+                        if(_controller.snapPositions.last != _controller.currentSnapPosition) {
+                          _controller.snapToPosition(_controller.snapPositions.last);
+                        }
+                        else {
+                          _controller.snapToPosition(_controller.snapPositions.first);
+                        }
+                      },
+                       alignment: Alignment.center,
+                    ),
+                ),
+
+                Switch(
+                    value: switchOn,
+                    onChanged: _onSwitchChanged,
+                    activeColor: MaterialColor(0xFF232941, todoColor01),
+                ),
+              ],
             )
           ),
-        ),
+          ),
+
+          sheetBelow: SnappingSheetContent(
+            child: Container(
+
+
+
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: FutureBuilder<List>(
+                    future: DataHelper.internal().getFilteredQuotes(query),
+                    initialData: List<Quote>(),
+                    builder: (context, snapshot) {
+                    return snapshot.hasData ?
+                     ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, position) {
+                          return new QuoteCardSmall(quote: snapshot.data[position]);
+                        },
+                      )
+                      : Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  )
+                ),
+              ),
+            ),
+            heightBehavior: SnappingSheetHeight.fit(),
+          ),
+
+      ),
+
+
+ /*
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () async {
             buttonPressed();
           },
         ),
+
+ */
       ),
     );
   }

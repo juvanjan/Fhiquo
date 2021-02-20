@@ -11,7 +11,7 @@ class TagWidget extends StatefulWidget {
   _TagWidgetState createState() => _TagWidgetState();
 
   static List<TagWidget> tempTagWidgets() {
-    List<Tag> tags = Tag.tempTags();
+    List<Tag> tags = Tag.tempTags2();
 
     var set = new List<TagWidget>();
     for (int i = 0; i < tags.length; i++) {
