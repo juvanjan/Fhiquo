@@ -25,7 +25,7 @@
             android:paddingEnd="6dp"
             android:gravity="center"
             android:textSize="18sp"
-            android:text="Phiquo" />
+            android:text="Fhiquo" />
 
         <ImageButton
             android:id="@+id/AppWidgetButton"
