@@ -1,4 +1,5 @@
 import 'package:fhiquo/internal/data/data_helper.dart';
+import 'package:fhiquo/internal/state/filter_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fhiquo/list_view.dart';
@@ -37,8 +38,11 @@ Future<void> main() async {
   NativeAds.initialize();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ListModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ListModel()),
+        ChangeNotifierProvider(create: (context) => FilterModel())
+      ],
       child: MaterialApp(
         home: NListView(),
       )

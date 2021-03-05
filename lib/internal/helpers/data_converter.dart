@@ -15,8 +15,8 @@ class DataConverter {
   static DateFormat basic_date_format = new DateFormat(BASIC_DATE_FORMAT_STRING);
   static DateFormat basic_time_format = new DateFormat(BASIC_TIME_FORMAT_STRING);
 
-  static List<int> stringToIntegerList(String code) {
-    List<int> set = new List<int>();
+  static Set<int> stringToIntegerSet(String code) {
+    Set<int> set = new Set<int>();
 
     if (CommonHelper.IsNullOrEmpty(code))
       return set;
@@ -28,7 +28,7 @@ class DataConverter {
     return set;
   }
 
-  static String getStringFromIntegerList(List<int> tags) {
+  static String getStringFromIntegerSet(Set<int> tags) {
     String set = "";
     for (int id in tags) {
       set += (set == "") ? id.toString() : TAG_ID_SEPARATOR + id.toString();

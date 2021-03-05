@@ -1,3 +1,4 @@
+import 'package:fhiquo/internal/data/data_helper.dart';
 import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/internal/state/list_model.dart';
 import 'package:fhiquo/widgets/tag_widget.dart';
@@ -21,7 +22,6 @@ class QuoteCardLarge extends StatefulWidget {
 }
 
 class _QuoteCardLargeState extends State<QuoteCardLarge> {
-  List<Widget> temporaryList = TagWidget.tempTagWidgets();
 
   @override
   void initState() {
@@ -159,13 +159,23 @@ class _QuoteCardLargeState extends State<QuoteCardLarge> {
                   ),
                   Flexible(
                     child: Container(
-                      child: Wrap(
-                        spacing: 3.0,
-                        runSpacing: 2.0,
-                        alignment: WrapAlignment.center,
-                        direction: Axis.horizontal,
-                        children: temporaryList,
-                      ),
+                      child: FutureBuilder<List>(
+                              future: DataHelper().getFilteredTags("", widget.quote.tags, TagType.Normal),
+                              initialData: List<Quote>(),
+                              builder: (context, snapshot) {
+                              return snapshot.hasData ?
+                               Wrap(
+                                  spacing: 3.0,
+                                  runSpacing: 2.0,
+                                  alignment: WrapAlignment.center,
+                                  direction: Axis.horizontal,
+                                  children: snapshot.data,
+                                )
+                                : Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                            )
                     ),
                   ),
                 ],

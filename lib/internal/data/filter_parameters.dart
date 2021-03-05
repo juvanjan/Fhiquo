@@ -4,11 +4,15 @@ class FilterParameters {
   String authorPattern;
   String originPattern;
   String tagsPattern;
-  List<int> tags;
+  Set<int> tags;
 
   FilterParameters() {
-      tags = new List();
+      tags = new Set();
       active = false;
+      searchPattern = "";
+      authorPattern = "";
+      originPattern = "";
+      tagsPattern = "";
   }
 
   bool isFilterActive() {

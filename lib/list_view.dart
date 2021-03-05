@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'internal/data/quote.dart';
+import 'internal/state/filter_model.dart';
 import 'internal/state/list_model.dart';
 import 'main.dart';
 import 'widgets/draggable_sheet.dart';
@@ -30,24 +31,21 @@ class NListView extends StatefulWidget {
 }
 
 class _NListViewState extends State<NListView> {
-  List<Widget> temporaryList = TagWidget.tempTagWidgets();
   SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var controller = new TextEditingController();
+  var searchTextController = new TextEditingController();
+  var authorTextController = new TextEditingController();
+  var originTextController = new TextEditingController();
+  var tagsTextController = new TextEditingController();
   var _controller = SnappingSheetController();
   bool switchOn = false;
-
-
-
-  void _onSwitchChanged(bool value) {
-    setState(() {
-      switchOn = value;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
+    authorTextController.addListener(authorTextChanged);
+    originTextController.addListener(originTextChanged);
+    tagsTextController.addListener(tagsTextChanged);
     HomeWidget.setAppGroupId('YOUR_GROUP_ID');
   }
 
@@ -159,8 +157,11 @@ class _NListViewState extends State<NListView> {
                                         contentPadding: const EdgeInsets.all(8.0),
                                         isDense: true,
                                       ),
+                                      style: TextStyle(color: Colors.black),
+                                      cursorColor: Colors.black,
                                       keyboardType: TextInputType.multiline,
                                       maxLines: null,
+                                      controller: authorTextController,
                                     ),
                                   ],
                                 )
@@ -197,9 +198,12 @@ class _NListViewState extends State<NListView> {
                                     contentPadding: const EdgeInsets.all(8.0),
                                     isDense: true,
                                   ),
+                                  style: TextStyle(color: Colors.black),
+                                  cursorColor: Colors.black,
                                   keyboardType: TextInputType.multiline,
                                   maxLines: null,
                                   minLines: 1,
+                                  controller: originTextController,
                                 ),
                               )
                             ),
@@ -221,7 +225,6 @@ class _NListViewState extends State<NListView> {
                               child: Column(
                                 children: [
                                   Container(
-
                                     child: TextField(
                                       decoration: InputDecoration(
                                         hintText: "search tag...",
@@ -237,9 +240,12 @@ class _NListViewState extends State<NListView> {
                                         contentPadding: const EdgeInsets.all(8.0),
                                         isDense: true,
                                       ),
+                                      style: TextStyle(color: Colors.black),
+                                      cursorColor: Colors.black,
                                       keyboardType: TextInputType.multiline,
                                       maxLines: null,
                                       minLines: 1,
+                                      controller: tagsTextController,
                                     ),
                                   ),
                                   Container(
@@ -257,29 +263,37 @@ class _NListViewState extends State<NListView> {
                         margin: EdgeInsets.fromLTRB(30, 4, 2, 2),
                         child: SizedBox(
 
-                        height: 120,
-                        child: SingleChildScrollView(
-                          child: Container(
-
-                            //padding: EdgeInsets.only(left: 32, top: 12),
-                            child: Wrap(
-                              spacing: 3.0,
-                              runSpacing: 2.0,
-                              alignment: WrapAlignment.center,
-                              direction: Axis.horizontal,
-                              children: temporaryList,
-                            ),
+                          height: 120,
+                          child: SingleChildScrollView(
+                            child: Container(
+                              child: Consumer<FilterModel>(
+                                builder: (context, model, child) {
+                                  return FutureBuilder<List>(
+                                    future: DataHelper().getFilteredTags(DataHelper().filterParameters.tagsPattern, DataHelper().filterParameters.tags, TagType.Filter),
+                                    initialData: List<Widget>(),
+                                    builder: (context, snapshot) {
+                                      return snapshot.hasData ?
+                                        Wrap(
+                                          spacing: 3.0,
+                                          runSpacing: 2.0,
+                                          alignment: WrapAlignment.center,
+                                          direction: Axis.horizontal,
+                                          children: snapshot.data,
+                                        )
+                                        : Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      },
+                                    );
+                                  }
+                                //padding: EdgeInsets.only(left: 32, top: 12),
+                              ),
+                            )
                           ),
                         )
                       ),
-                      )
-
-
-
-
                     ],
                   ),
-
                 ),
 
             ),
@@ -335,68 +349,91 @@ class _NListViewState extends State<NListView> {
               child: Center(
                 child: Container(
                   padding: EdgeInsets.all(8),
-                  child: FutureBuilder<List>(
-                    future: DataHelper().getFilteredQuotes(),
-                    initialData: List<Quote>(),
-                    builder: (context, snapshot) {
-                    return snapshot.hasData ?
-                     ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, position) {
-                          return new QuoteCardSmall(quote: snapshot.data[position]);
+                  child: Consumer<FilterModel>(
+                    builder: (context, model, child) {
+                      return FutureBuilder<List>(
+                        future: DataHelper().getFilteredQuotes(),
+                        initialData: List<Quote>(),
+                        builder: (context, snapshot) {
+                        return snapshot.hasData ?
+                         ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, position) {
+                              return new QuoteCardSmall(quote: snapshot.data[position]);
+                            },
+                          )
+                          : Center(
+                            child: CircularProgressIndicator(),
+                          );
                         },
-                      )
-                      : Center(
-                        child: CircularProgressIndicator(),
                       );
-                    },
-                  )
+                    }
+                  ),
                 ),
               ),
             ),
             heightBehavior: SnappingSheetHeight.fit(),
           ),
-
-      ),
-
-
- /*
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () async {
-            buttonPressed();
-          },
         ),
-
- */
-      ),
+      )
     );
   }
 
   _NListViewState() {
-    controller.addListener(textChanged);
+    searchTextController.addListener(searchTextChanged);
     searchBar = new SearchBar(
       inBar: true,
       buildDefaultAppBar: buildAppBar,
       setState: setState,
       onSubmitted: onSubmitted,
-      controller: controller,
+      controller: searchTextController,
       onCleared: () {
-        print("cleared");
       },
       onClosed: () {
-        print("closed");
       }
     );
   }
 
-
-
-  void textChanged() {
+  void searchTextChanged() {
     setState(() {
-        DataHelper().filterParameters.searchPattern = controller.text;
+        DataHelper().filterParameters.searchPattern = searchTextController.text;
     });
   }
+
+  void authorTextChanged() {
+    if (DataHelper().filterParameters.active) {
+      setState(() {
+        DataHelper().filterParameters.authorPattern = authorTextController.text;
+      });
+    } else {
+      DataHelper().filterParameters.authorPattern = authorTextController.text;
+    }
+  }
+
+  void originTextChanged() {
+    if (DataHelper().filterParameters.active) {
+      setState(() {
+        DataHelper().filterParameters.originPattern = originTextController.text;
+      });
+    } else {
+      DataHelper().filterParameters.originPattern = originTextController.text;
+    }
+  }
+
+  void tagsTextChanged() {
+    setState(() {
+        DataHelper().filterParameters.tagsPattern = tagsTextController.text;
+    });
+  }
+
+  void _onSwitchChanged(bool value) {
+    setState(() {
+      switchOn = value;
+      DataHelper().filterParameters.active = value;
+    });
+  }
+
+
 
   void onSubmitted(String value) {
     setState(() => _scaffoldKey.currentState

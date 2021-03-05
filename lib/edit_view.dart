@@ -24,13 +24,12 @@ class NEditView extends StatefulWidget {
 }
 
 class _NEditViewState extends State<NEditView> {
-  List<Widget> temporaryList = TagWidget.tempTagWidgets();
-
   TextEditingController  bodyController;
   TextEditingController  authorController;
   TextEditingController  originController;
   TextEditingController  commentController;
-
+  TextEditingController  tagController;
+  
   @override
   void initState() {
     super.initState();
@@ -48,8 +47,12 @@ class _NEditViewState extends State<NEditView> {
         authorController = new TextEditingController(text: '');
         originController = new TextEditingController(text: '');
         commentController = new TextEditingController(text: '');
+
         break;
     }
+    
+    tagController = new TextEditingController();
+    tagController.addListener(() { setState(() {}); });
 
   }
 
@@ -291,6 +294,7 @@ class _NEditViewState extends State<NEditView> {
                                   contentPadding: const EdgeInsets.all(10.0),
                                   isDense: true,
                                 ),
+                                controller: tagController,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 minLines: 1,
@@ -310,13 +314,23 @@ class _NEditViewState extends State<NEditView> {
 
                 Container(
                   padding: EdgeInsets.only(left: 32, top: 12),
-                  child: Wrap(
-                    spacing: 3.0,
-                    runSpacing: 2.0,
-                    alignment: WrapAlignment.center,
-                    direction: Axis.horizontal,
-                    children: temporaryList,
-                  ),
+                  child: FutureBuilder<List>(
+                    future: DataHelper().getFilteredTags(tagController.text, widget.quote.tags, TagType.Normal),
+                    initialData: List<Quote>(),
+                    builder: (context, snapshot) {
+                    return snapshot.hasData ?
+                     Wrap(
+                        spacing: 3.0,
+                        runSpacing: 2.0,
+                        alignment: WrapAlignment.center,
+                        direction: Axis.horizontal,
+                        children: snapshot.data,
+                      )
+                      : Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  )
                 ),
 
 
@@ -339,7 +353,7 @@ class _NEditViewState extends State<NEditView> {
   }
 
   saveNewQuote(BuildContext context) async {
-    await DataHelper().insertQuote(Quote.createQuote(0, authorController.text, originController.text, bodyController.text, commentController.text, new List<int>()));
+    await DataHelper().insertQuote(Quote.createQuote(0, authorController.text, originController.text, bodyController.text, commentController.text, new Set<int>()));
     Navigator.pop(context, true);
   }
 

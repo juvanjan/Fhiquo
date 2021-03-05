@@ -5,6 +5,9 @@ class CommonHelper {
   }
 
   static bool searchCompare(String originalText, String searchText) {
+    if (originalText == null || searchText == null)
+      return true;
+
     return parseStringForSearch(originalText).contains(parseStringForSearch(searchText));
   }
 
