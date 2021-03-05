@@ -112,7 +112,7 @@ class _NGalleryViewState extends State<NGalleryView> {
           child: Container(
             padding: EdgeInsets.all(0),
             child: FutureBuilder<List>(
-              future: DataHelper.internal().getFilteredQuotes(""),
+              future: DataHelper().getFilteredQuotes(),
               initialData: List<Quote>(),
               builder: (context, snapshot) {
               return snapshot.hasData ?

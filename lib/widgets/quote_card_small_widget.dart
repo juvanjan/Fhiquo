@@ -1,5 +1,7 @@
 import 'package:fhiquo/gallery_view.dart';
+import 'package:fhiquo/internal/data/data_helper.dart';
 import 'package:fhiquo/internal/data/quote.dart';
+import 'package:fhiquo/internal/helpers/common_helper.dart';
 import 'package:fhiquo/internal/state/list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:native_ads/native_ad_param.dart';
@@ -80,12 +82,9 @@ class _QuoteCardSmallState extends State<QuoteCardSmall> {
                       Flexible(
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 4),
-                          child: Text(
-                            widget.quote.body,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
-                            style: TextStyle(
-                              color: isSelected(model) ? Colors.white : Colors.black
+                          child: RichText(
+                            text: TextSpan(
+                              children: getTextSpan(widget.quote.body, model),
                             ),
                           )
                         )
@@ -105,12 +104,11 @@ class _QuoteCardSmallState extends State<QuoteCardSmall> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 4),
-                            child: Text(
-                              widget.quote.author,
-                              style: TextStyle(
-                                color: isSelected(model) ? Colors.white : Colors.black
+                            child: RichText(
+                              text: TextSpan(
+                                children: getTextSpan(widget.quote.author, model),
                               ),
-                            ),
+                            )
                           ),
                         ],
                       ),
@@ -127,12 +125,11 @@ class _QuoteCardSmallState extends State<QuoteCardSmall> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 4),
-                          child: Text(
-                              widget.quote.origin,
-                              style: TextStyle(
-                                color: isSelected(model) ? Colors.white : Colors.black
-                              ),
-                          ),
+                          child: RichText(
+                            text: TextSpan(
+                              children: getTextSpan(widget.quote.origin, model),
+                            ),
+                          )
                         ),
                       ],
                     ),
@@ -144,6 +141,35 @@ class _QuoteCardSmallState extends State<QuoteCardSmall> {
         );
       },
     );
+  }
+
+  List<TextSpan> getTextSpan(String original, ListModel model) {
+    String searchPattern = DataHelper().filterParameters.searchPattern;
+    List<int> test  = CommonHelper.findOccurrencesOfSubstring(original, searchPattern);
+    //List<int> test  = CommonHelper.findOccurrencesOfSubstring(original, DataHelper().filterParameters.searchPattern);
+    List<TextSpan> spans = new List();
+
+    if (test.length != 0) {
+      spans.add(TextSpan(text: original.substring(0, test[0]), style: TextStyle(color: isSelected(model) ? Colors.white : Colors.black)));
+
+      for(int i = 0; i < test.length; i++) {
+        int index = test[i];
+        int endIndex = test[i] + searchPattern.length;
+        spans.add(TextSpan(text: original.substring(test[i], endIndex), style: TextStyle(color: isSelected(model) ? Colors.white : Colors.black, backgroundColor: isSelected(model) ?  MaterialColor(0xFFd2d7ed, todoColor01) :  MaterialColor(0xFFd2d7ed, todoColor01) )));
+        if (endIndex != original.length - 1) {
+          if (i + 1 != test.length) {
+            spans.add(TextSpan(text: original.substring(endIndex, test[i + 1]), style: TextStyle(color: isSelected(model) ? Colors.white : Colors.black)));
+          } else {
+            spans.add(TextSpan(text: original.substring(endIndex, original.length), style:TextStyle(color: isSelected(model) ? Colors.white : Colors.black)));
+          }
+        }
+
+      }
+    } else {
+      spans.add(TextSpan(text: original.substring(0, original.length), style: TextStyle(color: isSelected(model) ? Colors.white : Colors.black)));
+    }
+
+    return spans;
   }
 
   bool isSelected(ListModel model) {

@@ -135,7 +135,7 @@ class NSettingsView extends StatelessWidget {
       allowedUtiTypes: ["db"]
     );
     final filePath = await FlutterFileDialog.pickFile(params: params);
-    await DataHelper.internal().importDatabase(filePath);
+    await DataHelper().importDatabase(filePath);
   }
 
 }

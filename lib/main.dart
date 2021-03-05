@@ -18,7 +18,7 @@ void callbackDispatcher() {
 
     final now = DateTime.now();
 
-    Quote quote = await DataHelper.internal().getRandomQuote();
+    Quote quote = await DataHelper().getRandomQuote();
     return Future.wait<bool>([
 
       HomeWidget.saveWidgetData('body', "FROM APP"),

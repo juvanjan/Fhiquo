@@ -32,7 +32,6 @@ class NListView extends StatefulWidget {
 class _NListViewState extends State<NListView> {
   List<Widget> temporaryList = TagWidget.tempTagWidgets();
   SearchBar searchBar;
-  String query;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var controller = new TextEditingController();
   var _controller = SnappingSheetController();
@@ -50,7 +49,6 @@ class _NListViewState extends State<NListView> {
   void initState() {
     super.initState();
     HomeWidget.setAppGroupId('YOUR_GROUP_ID');
-
   }
 
   @override
@@ -74,6 +72,7 @@ class _NListViewState extends State<NListView> {
       home: Scaffold(
         key: _scaffoldKey,
         backgroundColor: MaterialColor(0xFFd2d7ed, todoColor01),
+        resizeToAvoidBottomInset: false,
         appBar: searchBar.build(context),
         drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -284,7 +283,7 @@ class _NListViewState extends State<NListView> {
                 ),
 
             ),
-            heightBehavior: SnappingSheetHeight.fit(),
+            heightBehavior: SnappingSheetHeight.fixed(),
           ),
 
           lockOverflowDrag: true,
@@ -333,13 +332,11 @@ class _NListViewState extends State<NListView> {
           sheetBelow: SnappingSheetContent(
             child: Container(
 
-
-
               child: Center(
                 child: Container(
                   padding: EdgeInsets.all(8),
                   child: FutureBuilder<List>(
-                    future: DataHelper.internal().getFilteredQuotes(query),
+                    future: DataHelper().getFilteredQuotes(),
                     initialData: List<Quote>(),
                     builder: (context, snapshot) {
                     return snapshot.hasData ?
@@ -397,7 +394,7 @@ class _NListViewState extends State<NListView> {
 
   void textChanged() {
     setState(() {
-      query = controller.text;
+        DataHelper().filterParameters.searchPattern = controller.text;
     });
   }
 
@@ -509,63 +506,8 @@ class _NListViewState extends State<NListView> {
   }
 
 
-
-
-
-
-
-
   void buttonPressed() async{
     Navigator.push(context, MaterialPageRoute(builder: (context) => NGalleryView()));
   }
-
-
-
-  Future<void> _sendData() async {
-    try {
-      return Future.wait([
-        HomeWidget.saveWidgetData<String>('title', "_titleController.text"),
-        HomeWidget.saveWidgetData<String>('message'," _messageController.text"),
-      ]);
-    } on PlatformException catch (exception) {
-      debugPrint('Error Sending Data. $exception');
-    }
-  }
-
-  Future<void> _updateWidget() async {
-    try {
-      return HomeWidget.updateWidget(
-          name: 'QuoteAppWidget', iOSName: 'HomeWidgetExample');
-    } on PlatformException catch (exception) {
-      debugPrint('Error Updating Widget. $exception');
-    }
-  }
-
-
-  Future<void> _sendAndUpdate() async {
-    await _sendData();
-    await _updateWidget();
-  }
-
-  void _startBackgroundUpdate() {
-    Workmanager.registerPeriodicTask('1', 'widgetBackgroundUpdate',
-        frequency: Duration(minutes: 15));
-  }
-
-  void _stopBackgroundUpdate() {
-    Workmanager.cancelByUniqueName('1');
-  }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -339,7 +339,7 @@ class _NEditViewState extends State<NEditView> {
   }
 
   saveNewQuote(BuildContext context) async {
-    await DataHelper.internal().insertQuote(Quote.createQuote(0, authorController.text, originController.text, bodyController.text, commentController.text, new List<int>()));
+    await DataHelper().insertQuote(Quote.createQuote(0, authorController.text, originController.text, bodyController.text, commentController.text, new List<int>()));
     Navigator.pop(context, true);
   }
 

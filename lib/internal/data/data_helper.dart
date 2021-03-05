@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:fhiquo/internal/data/data_contract.dart';
+import 'package:fhiquo/internal/data/filter_parameters.dart';
 import 'package:fhiquo/internal/data/quote.dart';
 import 'package:fhiquo/internal/data/tag.dart';
 import 'package:fhiquo/internal/helpers/ad_helper.dart';
+import 'package:fhiquo/internal/helpers/common_helper.dart';
 import 'package:fhiquo/internal/state/list_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,8 @@ class DataHelper {
   factory DataHelper() => _instance;
 	static Database _database;
 	static int get version => 1;
+
+	FilterParameters filterParameters;
 
   Future<Database> get database async {
     if (_database != null) return _database;
@@ -27,7 +31,7 @@ class DataHelper {
   initDB() async {
 		//Directory documentsDirectory = await getApplicationDocumentsDirectory();
 		//join(documentsDirectory.path, "TestDB.db");
-
+		filterParameters = new FilterParameters();
 		String path = "/data/data/fhiquo.poc/db/TestQDB.db";
     return await openDatabase(path, version: version, onOpen: (db) {}, onCreate: onCreate);
   }
@@ -104,12 +108,12 @@ class DataHelper {
 	}
 
 	Future<Quote> getRandomQuote() async {
-  	List<Quote> quotes = await getFilteredQuotes("");
+  	List<Quote> quotes = await getFilteredQuotes();
   	return quotes[new Random().nextInt(quotes.length)];
 	}
 
 	Future<List<Quote>> getFilteredQuotesWithAds(BuildContext context, String query) async {
-		List<Quote> initial = await getFilteredQuotes(query);
+		List<Quote> initial = await getFilteredQuotes();
 		List<Quote> set = new List();
 
 		int counter = 1;
@@ -130,20 +134,23 @@ class DataHelper {
 		return set;
 	}
 
-	Future<List<Quote>> getFilteredQuotes(String query) async {
+	Future<List<Quote>> getFilteredQuotes() async {
   	List<Quote> initial = await readQuotes();
+  	List<Quote> filtered = new List();
 
-  	if (query == null || query.isEmpty)
-			return initial;
-
-  	List<Quote> set = new List();
-
-  	for(Quote quote in initial) {
-  		if (quote.body.contains(query)) {
-				set.add(quote);
+		if (!CommonHelper.IsNullOrEmpty(filterParameters.searchPattern)) {
+			for(Quote quote in initial) {
+				if (!CommonHelper.searchCompare(quote.body, filterParameters.searchPattern) &&
+						!CommonHelper.searchCompare(quote.author, filterParameters.searchPattern) &&
+						!CommonHelper.searchCompare(quote.origin, filterParameters.searchPattern) &&
+						!CommonHelper.searchCompare(quote.comment, filterParameters.searchPattern)) {
+					filtered.add(quote);
+				}
 			}
 		}
 
+
+  	List<Quote> set = initial.where((element) => !filtered.contains(element)).toList();
 		return set;
 	}
 
