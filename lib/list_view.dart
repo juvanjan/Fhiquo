@@ -1,4 +1,5 @@
 import 'package:fhiquo/gallery_view.dart';
+import 'package:fhiquo/widgets/drawer.dart';
 import 'package:fhiquo/widgets/tag_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -72,47 +73,7 @@ class _NListViewState extends State<NListView> {
         backgroundColor: MaterialColor(0xFFd2d7ed, todoColor01),
         resizeToAvoidBottomInset: false,
         appBar: searchBar.build(context),
-        drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              physics: const AlwaysScrollableScrollPhysics (),
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  child: Text(''),
-                  decoration: BoxDecoration(
-                    color: MaterialColor(0xFF232941, todoColor01),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => NSettingsView()));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(14),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 14),
-                          child: Icon(Icons.settings),
-                        ),
-                        Flexible(
-                          child: Text('Settings',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold
-                          )
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              )
-            ],
-          ),
-        ),
+        drawer: AppDrawer(),
         body:  SnappingSheet(
 
           grabbingHeight: 40,

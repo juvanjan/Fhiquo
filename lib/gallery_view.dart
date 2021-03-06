@@ -136,7 +136,9 @@ class _NGalleryViewState extends State<NGalleryView> {
   }
 
   getInitialPage(List<Quote> quotes) {
-    int index = quotes.indexOf(quotes.where((element) => element.id == widget.initialQuote.id).first);
-    return index;
+    if (widget.initialQuote != null)
+      return quotes.indexOf(quotes.where((element) => element.id == widget.initialQuote.id).first);
+    else
+      return 0;
   }
 }
