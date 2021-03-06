@@ -120,6 +120,7 @@ class _NListViewState extends State<NListView> {
             SnapPosition(positionFactor: 0.54),
             SnapPosition(positionFactor: 1.0),
           ],
+          initSnapPosition: SnapPosition(positionFactor: 1.0),
           snappingSheetController: _controller,
           sheetAbove: SnappingSheetContent(
             child: Container(
@@ -352,7 +353,7 @@ class _NListViewState extends State<NListView> {
                   child: Consumer<FilterModel>(
                     builder: (context, model, child) {
                       return FutureBuilder<List>(
-                        future: DataHelper().getFilteredQuotes(),
+                        future: DataHelper().getFilteredQuotes(context),
                         initialData: List<Quote>(),
                         builder: (context, snapshot) {
                         return snapshot.hasData ?

@@ -1,17 +1,12 @@
 import 'package:fhiquo/internal/data/data_helper.dart';
 import 'package:fhiquo/internal/data/quote.dart';
-import 'package:fhiquo/internal/state/list_model.dart';
 import 'package:fhiquo/widgets/tag_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:native_ads/native_ad_param.dart';
 import 'package:native_ads/native_ad_view.dart';
-import 'package:provider/provider.dart';
 
-
-import '../edit_view.dart';
-import '../main.dart';
 
 class QuoteCardLarge extends StatefulWidget {
   final Quote quote;
@@ -161,7 +156,7 @@ class _QuoteCardLargeState extends State<QuoteCardLarge> {
                     child: Container(
                       child: FutureBuilder<List>(
                               future: DataHelper().getFilteredTags("", widget.quote.tags, TagType.Normal),
-                              initialData: List<Quote>(),
+                              initialData: List<Widget>(),
                               builder: (context, snapshot) {
                               return snapshot.hasData ?
                                Wrap(

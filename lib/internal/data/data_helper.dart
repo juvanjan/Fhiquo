@@ -116,7 +116,7 @@ class DataHelper {
 	}
 
 	Future<List<Quote>> getFilteredQuotesWithAds(BuildContext context, String query) async {
-		List<Quote> initial = await getFilteredQuotes();
+		List<Quote> initial = await getFilteredQuotes(context);
 		List<Quote> set = new List();
 
 		int counter = 1;
@@ -137,7 +137,7 @@ class DataHelper {
 		return set;
 	}
 
-	Future<List<Quote>> getFilteredQuotes() async {
+	Future<List<Quote>> getFilteredQuotes([BuildContext context]) async {
   	List<Quote> initial = await readQuotes();
   	List<Quote> filtered = new List();
 
@@ -163,6 +163,10 @@ class DataHelper {
 		}
 
   	List<Quote> set = initial.where((element) => !filtered.contains(element)).toList();
+
+		if (context != null)
+			Provider.of<ListModel>(context, listen: false).setListSize(set.length);
+
 		return set;
 	}
 
